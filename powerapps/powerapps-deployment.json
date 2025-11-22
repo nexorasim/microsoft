@@ -1,0 +1,168 @@
+{
+  "portalConfiguration": {
+    "name": "NexoraSIM Enterprise Portal",
+    "url": "nexorasim.powerappsportals.com",
+    "version": "1.0.0",
+    "environment": "production",
+    "tenantId": "d7ff8066-4e28-4170-9805-b60ec642c442",
+    "applicationId": "56b29d70-add0-4e62-a33c-fd1fb44da71a"
+  },
+  "authentication": {
+    "provider": "Microsoft Entra ID",
+    "singleSignOn": true,
+    "multiFactorAuth": true,
+    "sessionTimeout": 480,
+    "redirectUri": "https://nexorasim.powerappsportals.com/signin-oidc"
+  },
+  "security": {
+    "httpsOnly": true,
+    "contentSecurityPolicy": "strict",
+    "xFrameOptions": "DENY",
+    "xContentTypeOptions": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  "features": {
+    "esimManagement": {
+      "enabled": true,
+      "carriers": ["MPT", "ATOM", "U9", "MYTEL"],
+      "provisioning": true,
+      "qrCodeGeneration": true,
+      "directInstall": true
+    },
+    "deviceEnrollment": {
+      "enabled": true,
+      "appleBusinessManager": true,
+      "androidEnterprise": true,
+      "mdmIntegration": true
+    },
+    "userManagement": {
+      "enabled": true,
+      "roleBasedAccess": true,
+      "bulkOperations": true,
+      "auditLogging": true
+    },
+    "reporting": {
+      "enabled": true,
+      "realTimeAnalytics": true,
+      "exportFormats": ["PDF", "Excel", "CSV"],
+      "scheduledReports": true
+    }
+  },
+  "integrations": {
+    "microsoftGraph": {
+      "enabled": true,
+      "permissions": [
+        "User.Read",
+        "Directory.Read.All",
+        "DeviceManagementManagedDevices.ReadWrite.All"
+      ]
+    },
+    "appleBusinessManager": {
+      "enabled": true,
+      "serverToken": "encrypted_token",
+      "organizationId": "nexorasim_org"
+    },
+    "carrierAPIs": {
+      "mpt": {
+        "endpoint": "https://api.mpt.com.mm/esim",
+        "authentication": "oauth2"
+      },
+      "atom": {
+        "endpoint": "https://api.atom.com.mm/esim",
+        "authentication": "oauth2"
+      },
+      "u9": {
+        "endpoint": "https://api.u9.com.mm/esim",
+        "authentication": "oauth2"
+      },
+      "mytel": {
+        "endpoint": "https://api.mytel.com.mm/esim",
+        "authentication": "oauth2"
+      }
+    }
+  },
+  "dataStorage": {
+    "provider": "Microsoft Dataverse",
+    "encryption": "AES-256",
+    "backup": {
+      "enabled": true,
+      "frequency": "daily",
+      "retention": "90 days"
+    },
+    "compliance": {
+      "gdpr": true,
+      "hipaa": false,
+      "sox": true
+    }
+  },
+  "performance": {
+    "caching": {
+      "enabled": true,
+      "strategy": "redis",
+      "ttl": 3600
+    },
+    "cdn": {
+      "enabled": true,
+      "provider": "Azure CDN"
+    },
+    "compression": {
+      "enabled": true,
+      "algorithm": "gzip"
+    }
+  },
+  "monitoring": {
+    "applicationInsights": {
+      "enabled": true,
+      "instrumentationKey": "encrypted_key"
+    },
+    "healthChecks": {
+      "enabled": true,
+      "endpoints": [
+        "/health",
+        "/health/ready",
+        "/health/live"
+      ]
+    },
+    "alerting": {
+      "enabled": true,
+      "channels": ["email", "teams"],
+      "thresholds": {
+        "responseTime": 2000,
+        "errorRate": 0.05,
+        "availability": 0.99
+      }
+    }
+  },
+  "deployment": {
+    "strategy": "blue-green",
+    "rollback": {
+      "enabled": true,
+      "automatic": true,
+      "threshold": 0.1
+    },
+    "scaling": {
+      "enabled": true,
+      "minInstances": 2,
+      "maxInstances": 10,
+      "targetCPU": 70
+    }
+  },
+  "customization": {
+    "branding": {
+      "logo": "/assets/nexorasim-logo.png",
+      "primaryColor": "#0078d4",
+      "secondaryColor": "#106ebe",
+      "favicon": "/assets/favicon.ico"
+    },
+    "localization": {
+      "enabled": true,
+      "defaultLanguage": "en-US",
+      "supportedLanguages": ["en-US", "my-MM"]
+    },
+    "themes": {
+      "default": "enterprise",
+      "darkMode": true,
+      "customCSS": "/assets/custom.css"
+    }
+  }
+}
