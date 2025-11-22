@@ -1,0 +1,36 @@
+User-agent: *
+Disallow: /login
+Disallow: /dashboard
+Disallow: /users
+Disallow: /esims
+Disallow: /devices
+Disallow: /carriers
+Disallow: /audit
+Disallow: /security
+Disallow: /api/
+Disallow: /scripts/
+Disallow: /assets/private/
+Disallow: /*.json$
+Disallow: /*.log$
+
+# Allow public assets
+Allow: /assets/public/
+Allow: /styles/
+Allow: /*.css$
+Allow: /*.js$
+
+# Sitemap location
+Sitemap: https://nexorasim.com/sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 10
+
+# Block specific bots that might pose security risks
+User-agent: BadBot
+Disallow: /
+
+User-agent: MaliciousBot
+Disallow: /
+
+User-agent: ScrapingBot
+Disallow: /

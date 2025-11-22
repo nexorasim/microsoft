@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
+    <title>NexoraSIM Enterprise Portal - Secure eSIM Management</title>
+    <meta name="description" content="Enterprise-grade eSIM lifecycle management platform with multi-carrier support, device enrollment, and comprehensive security controls.">
+    <meta name="keywords" content="eSIM, enterprise, management, security, MPT, ATOM, MYTEL, U9, Myanmar">
+    <meta name="author" content="NexoraSIM Enterprise">
+    
+    <meta property="og:title" content="NexoraSIM Enterprise Portal">
+    <meta property="og:description" content="Secure eSIM management platform for enterprise operations">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nexorasim.com">
+    <meta property="og:image" content="/assets/og-image.jpg">
+    
+    <link rel="canonical" href="https://nexorasim.com">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/enterprise.css">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "NexoraSIM Enterprise Portal",
+        "description": "Enterprise eSIM management platform",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</head>
+<body class="no-select" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+    <div id="loading-screen" class="loading-overlay" aria-hidden="true">
+        <div class="loading-spinner" role="status" aria-label="Loading"></div>
+        <p>Initializing Secure Portal...</p>
+    </div>
+
+    <div id="login-portal" class="login-container" role="main">
+        <div class="login-card">
+            <header class="login-header">
+                <h1>NexoraSIM Enterprise</h1>
+                <p>Secure eSIM Management Portal</p>
+            </header>
+            
+            <form id="login-form" class="login-form" novalidate>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" required 
+                           autocomplete="email" aria-describedby="email-error">
+                    <div id="email-error" class="error-message" role="alert"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required 
+                           autocomplete="current-password" aria-describedby="password-error">
+                    <div id="password-error" class="error-message" role="alert"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mfa-code" class="form-label">MFA Code</label>
+                    <input type="text" id="mfa-code" name="mfa-code" class="form-input" 
+                           placeholder="6-digit code" maxlength="6" pattern="[0-9]{6}"
+                           autocomplete="one-time-code" aria-describedby="mfa-error">
+                    <div id="mfa-error" class="error-message" role="alert"></div>
+                </div>
+                
+                <button type="submit" class="btn-primary" id="login-btn">
+                    <span>Sign In Securely</span>
+                </button>
+            </form>
+            
+            <div class="security-notice">
+                <p>Protected by enterprise-grade security</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-portal" class="portal-container" style="display: none;">
+        <nav class="sidebar" role="navigation" aria-label="Main navigation">
+            <div class="sidebar-header">
+                <h2>NexoraSIM</h2>
+                <span class="user-role" id="user-role">Administrator</span>
+            </div>
+            
+            <ul class="nav-menu" role="menubar">
+                <li role="none">
+                    <button class="nav-item active" data-section="dashboard" role="menuitem" aria-current="page">
+                        <span class="nav-text">Dashboard</span>
+                    </button>
+                </li>
+                <li role="none">
+                    <button class="nav-item" data-section="users" role="menuitem">
+                        <span class="nav-text">User Management</span>
+                    </button>
+                </li>
+                <li role="none">
+                    <button class="nav-item" data-section="esims" role="menuitem">
+                        <span class="nav-text">eSIM Profiles</span>
+                    </button>
+                </li>
+                <li role="none">
+                    <button class="nav-item" data-section="devices" role="menuitem">
+                        <span class="nav-text">Device Enrollment</span>
+                    </button>
+                </li>
+                <li role="none">
+                    <button class="nav-item" data-section="carriers" role="menuitem">
+                        <span class="nav-text">Carrier Config</span>
+                    </button>
+                </li>
+                <li role="none">
+                    <button class="nav-item" data-section="audit" role="menuitem">
+                        <span class="nav-text">Audit Logs</span>
+                    </button>
+                </li>
+                <li role="none">
+                    <button class="nav-item" data-section="security" role="menuitem">
+                        <span class="nav-text">Security</span>
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="logout-btn">Sign Out</button>
+            </div>
+        </nav>
+
+        <main class="main-content" role="main">
+            <header class="content-header">
+                <h1 id="page-title">Enterprise Dashboard</h1>
+                <div class="header-actions">
+                    <span class="status-indicator online">System Online</span>
+                    <span class="user-info" id="user-info">admin@nexorasim.com</span>
+                </div>
+            </header>
+
+            <section id="dashboard-section" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-users">247</div>
+                        <div class="stat-label">Total Users</div>
+                        <div class="stat-trend positive">+12%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="active-esims">189</div>
+                        <div class="stat-label">Active eSIMs</div>
+                        <div class="stat-trend positive">+8%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="enrolled-devices">156</div>
+                        <div class="stat-label">Enrolled Devices</div>
+                        <div class="stat-trend positive">+15%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Active Carriers</div>
+                        <div class="stat-trend neutral">100%</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Recent Activity</h3>
+                        <div class="activity-list" id="activity-list">
+                            <div class="activity-item">
+                                <span class="activity-time">2 min ago</span>
+                                <span class="activity-text">eSIM activated for user@company.com</span>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-time">5 min ago</span>
+                                <span class="activity-text">New device enrolled via Apple Business Manager</span>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-time">12 min ago</span>
+                                <span class="activity-text">Bulk eSIM provisioning completed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3>Carrier Status</h3>
+                        <div class="carrier-status">
+                            <div class="carrier-item">
+                                <span class="carrier-name">MPT Myanmar</span>
+                                <span class="status-dot online"></span>
+                            </div>
+                            <div class="carrier-item">
+                                <span class="carrier-name">ATOM Myanmar</span>
+                                <span class="status-dot online"></span>
+                            </div>
+                            <div class="carrier-item">
+                                <span class="carrier-name">U9 Networks</span>
+                                <span class="status-dot online"></span>
+                            </div>
+                            <div class="carrier-item">
+                                <span class="carrier-name">MYTEL</span>
+                                <span class="status-dot online"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="users-section" class="content-section">
+                <div class="section-header">
+                    <h2>User Management</h2>
+                    <button class="btn-primary" id="add-user-btn">Add User</button>
+                </div>
+                
+                <div class="table-controls">
+                    <input type="search" class="search-input" placeholder="Search users..." 
+                           id="user-search" aria-label="Search users">
+                    <select class="filter-select" id="user-filter" aria-label="Filter users">
+                        <option value="">All Roles</option>
+                        <option value="admin">Administrator</option>
+                        <option value="operator">Operator</option>
+                        <option value="user">User</option>
+                    </select>
+                    <button class="btn-secondary" id="export-users">Export</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table" role="table" aria-label="Users table">
+                        <thead>
+                            <tr role="row">
+                                <th role="columnheader" tabindex="0">User ID</th>
+                                <th role="columnheader" tabindex="0">Name</th>
+                                <th role="columnheader" tabindex="0">Email</th>
+                                <th role="columnheader" tabindex="0">Role</th>
+                                <th role="columnheader" tabindex="0">Status</th>
+                                <th role="columnheader" tabindex="0">eSIMs</th>
+                                <th role="columnheader">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="esims-section" class="content-section">
+                <div class="section-header">
+                    <h2>eSIM Profile Management</h2>
+                    <button class="btn-primary" id="create-esim-btn">Create eSIM</button>
+                </div>
+                
+                <div class="table-controls">
+                    <input type="search" class="search-input" placeholder="Search eSIM profiles..." 
+                           id="esim-search" aria-label="Search eSIM profiles">
+                    <select class="filter-select" id="esim-filter" aria-label="Filter eSIM profiles">
+                        <option value="">All Carriers</option>
+                        <option value="MPT">MPT Myanmar</option>
+                        <option value="ATOM">ATOM Myanmar</option>
+                        <option value="U9">U9 Networks</option>
+                        <option value="MYTEL">MYTEL</option>
+                    </select>
+                    <button class="btn-secondary" id="export-esims">Export</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table" role="table" aria-label="eSIM profiles table">
+                        <thead>
+                            <tr role="row">
+                                <th role="columnheader" tabindex="0">ICCID</th>
+                                <th role="columnheader" tabindex="0">User</th>
+                                <th role="columnheader" tabindex="0">Carrier</th>
+                                <th role="columnheader" tabindex="0">Phone Number</th>
+                                <th role="columnheader" tabindex="0">Status</th>
+                                <th role="columnheader" tabindex="0">Created</th>
+                                <th role="columnheader">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="esims-table-body">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="devices-section" class="content-section">
+                <div class="section-header">
+                    <h2>Device Enrollment</h2>
+                    <button class="btn-primary" id="enroll-device-btn">Enroll Device</button>
+                </div>
+                
+                <div class="enrollment-grid">
+                    <div class="enrollment-card">
+                        <h3>Apple Business Manager</h3>
+                        <p>Manage iOS devices through ABM integration</p>
+                        <div class="enrollment-stats">
+                            <span>Connected Devices: <strong id="ios-devices">89</strong></span>
+                        </div>
+                        <button class="btn-secondary">Configure ABM</button>
+                    </div>
+                    
+                    <div class="enrollment-card">
+                        <h3>Android Enterprise</h3>
+                        <p>Manage Android devices through AE</p>
+                        <div class="enrollment-stats">
+                            <span>Connected Devices: <strong id="android-devices">67</strong></span>
+                        </div>
+                        <button class="btn-secondary">Configure AE</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="carriers-section" class="content-section">
+                <div class="section-header">
+                    <h2>Carrier Configuration</h2>
+                </div>
+                
+                <div class="carriers-grid">
+                    <div class="carrier-card">
+                        <div class="carrier-header">
+                            <h3>MPT Myanmar</h3>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="carrier-details">
+                            <p><strong>SMDP+:</strong> smdp.mpt.com.mm</p>
+                            <p><strong>API:</strong> api.mpt.com.mm</p>
+                            <p><strong>Status:</strong> Operational</p>
+                        </div>
+                        <button class="btn-secondary">Configure</button>
+                    </div>
+                    
+                    <div class="carrier-card">
+                        <div class="carrier-header">
+                            <h3>ATOM Myanmar</h3>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="carrier-details">
+                            <p><strong>SMDP+:</strong> smdp.atom.com.mm</p>
+                            <p><strong>API:</strong> api.atom.com.mm</p>
+                            <p><strong>Status:</strong> Operational</p>
+                        </div>
+                        <button class="btn-secondary">Configure</button>
+                    </div>
+                    
+                    <div class="carrier-card">
+                        <div class="carrier-header">
+                            <h3>U9 Networks</h3>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="carrier-details">
+                            <p><strong>SMDP+:</strong> smdp.u9.com.mm</p>
+                            <p><strong>API:</strong> api.u9.com.mm</p>
+                            <p><strong>Status:</strong> Operational</p>
+                        </div>
+                        <button class="btn-secondary">Configure</button>
+                    </div>
+                    
+                    <div class="carrier-card">
+                        <div class="carrier-header">
+                            <h3>MYTEL</h3>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="carrier-details">
+                            <p><strong>SMDP+:</strong> smdp.mytel.com.mm</p>
+                            <p><strong>API:</strong> api.mytel.com.mm</p>
+                            <p><strong>Status:</strong> Operational</p>
+                        </div>
+                        <button class="btn-secondary">Configure</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="audit-section" class="content-section">
+                <div class="section-header">
+                    <h2>Audit Logs</h2>
+                    <button class="btn-primary" id="export-audit">Export Logs</button>
+                </div>
+                
+                <div class="audit-filters">
+                    <input type="date" class="form-input" id="audit-from" aria-label="From date">
+                    <input type="date" class="form-input" id="audit-to" aria-label="To date">
+                    <select class="filter-select" id="audit-type" aria-label="Filter by action type">
+                        <option value="">All Actions</option>
+                        <option value="login">Login</option>
+                        <option value="esim">eSIM Operations</option>
+                        <option value="user">User Management</option>
+                        <option value="device">Device Operations</option>
+                    </select>
+                    <button class="btn-secondary" id="filter-audit">Filter</button>
+                </div>
+
+                <div class="audit-log" id="audit-log">
+                    <!-- Dynamic audit entries -->
+                </div>
+            </section>
+
+            <section id="security-section" class="content-section">
+                <div class="section-header">
+                    <h2>Security & Compliance</h2>
+                </div>
+                
+                <div class="security-grid">
+                    <div class="security-card">
+                        <h3>Security Status</h3>
+                        <div class="security-items">
+                            <div class="security-item">
+                                <span class="security-label">HTTPS/TLS</span>
+                                <span class="status-badge online">Enabled</span>
+                            </div>
+                            <div class="security-item">
+                                <span class="security-label">CSP Headers</span>
+                                <span class="status-badge online">Active</span>
+                            </div>
+                            <div class="security-item">
+                                <span class="security-label">Rate Limiting</span>
+                                <span class="status-badge online">Active</span>
+                            </div>
+                            <div class="security-item">
+                                <span class="security-label">Audit Logging</span>
+                                <span class="status-badge online">Enabled</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="security-card">
+                        <h3>Compliance</h3>
+                        <div class="compliance-items">
+                            <div class="compliance-item">
+                                <span class="compliance-label">GDPR</span>
+                                <span class="status-badge online">Compliant</span>
+                            </div>
+                            <div class="compliance-item">
+                                <span class="compliance-label">SOC 2</span>
+                                <span class="status-badge online">Certified</span>
+                            </div>
+                            <div class="compliance-item">
+                                <span class="compliance-label">ISO 27001</span>
+                                <span class="status-badge online">Certified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="scripts/security.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/portal.js"></script>
+    <script src="scripts/api.js"></script>
+</body>
+</html>
