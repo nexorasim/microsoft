@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexoraSIM eSIM Enterprise Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .esim-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .qr-icon { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .phone-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .install-icon { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .esim-info {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .info-value {
+            font-weight: 500;
+            color: #333;
+            font-family: monospace;
+        }
+        
+        .qr-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .phone-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .phone-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+        }
+        
+        .btn-ios {
+            background: linear-gradient(135deg, #000, #333);
+            color: white;
+        }
+        
+        .btn-android {
+            background: linear-gradient(135deg, #3ddc84, #07c160);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .platform-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .platform-btn {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .platform-btn.active {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .platform-btn i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .ios-color { color: #000; }
+        .android-color { color: #3ddc84; }
+        
+        .transfer-section {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-active { background: #43e97b; }
+        .status-pending { background: #fdcb6e; }
+        .status-inactive { background: #e17055; }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .platform-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-sim-card"></i> NexoraSIM eSIM Enterprise Management</h1>
+            <p>Complete eSIM lifecycle management for iOS and Android devices</p>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon esim-icon">
+                        <i class="fas fa-sim-card"></i>
+                    </div>
+                    <div class="card-title">eSIM Information</div>
+                </div>
+                <div class="esim-info">
+                    <div class="info-row">
+                        <span class="info-label">ICCID:</span>
+                        <span class="info-value" id="iccid">89014103211118510720</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Network:</span>
+                        <span class="info-value" id="network">MPT Myanmar</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Status:</span>
+                        <span class="info-value">
+                            <span class="status-indicator status-active"></span>
+                            Active
+                        </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Data Plan:</span>
+                        <span class="info-value">Enterprise Unlimited</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Expires:</span>
+                        <span class="info-value">2025-12-31</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon qr-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="card-title">eSIM QR Code</div>
+                </div>
+                <div class="qr-container">
+                    <div class="qr-code" id="qrCode">
+                        <div>
+                            <i class="fas fa-qrcode" style="font-size: 60px; color: #ddd;"></i>
+                            <div>Scan to Install eSIM</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="generateQR()">
+                        <i class="fas fa-sync"></i> Generate QR Code
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon phone-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="card-title">Phone Number Assignment</div>
+                </div>
+                <input type="tel" class="phone-input" id="phoneNumber" placeholder="+95 9 XXX XXX XXX" value="+95 9 123 456 789">
+                <button class="btn btn-success" onclick="assignNumber()">
+                    <i class="fas fa-phone"></i> Assign Phone Number
+                </button>
+                <div class="transfer-section">
+                    <h4><i class="fas fa-exchange-alt"></i> Number Transfer</h4>
+                    <p>Transfer existing number to eSIM</p>
+                    <button class="btn btn-primary" onclick="transferNumber()">
+                        <i class="fas fa-arrow-right"></i> Start Transfer Process
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon install-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="card-title">Direct eSIM Installation</div>
+                </div>
+                <div class="platform-selector">
+                    <div class="platform-btn active" onclick="selectPlatform('ios')">
+                        <i class="fab fa-apple ios-color"></i>
+                        <div>iOS</div>
+                    </div>
+                    <div class="platform-btn" onclick="selectPlatform('android')">
+                        <i class="fab fa-android android-color"></i>
+                        <div>Android</div>
+                    </div>
+                </div>
+                <button class="btn btn-ios" id="installBtn" onclick="installESIM()">
+                    <i class="fab fa-apple"></i> Install eSIM on iOS
+                </button>
+                <div style="margin-top: 15px; padding: 15px; background: #f0f0f0; border-radius: 10px; font-size: 14px;">
+                    <strong>Requirements:</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>iOS 12.1+ or Android 9+</li>
+                        <li>eSIM compatible device</li>
+                        <li>Active internet connection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon" style="background: linear-gradient(135deg, #a8edea, #fed6e3);">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="card-title">Enterprise Management</div>
+            </div>
+            <div class="grid">
+                <button class="btn btn-primary" onclick="manageProfiles()">
+                    <i class="fas fa-list"></i> Manage All Profiles
+                </button>
+                <button class="btn btn-success" onclick="bulkProvision()">
+                    <i class="fas fa-users"></i> Bulk Provisioning
+                </button>
+                <button class="btn" style="background: linear-gradient(135deg, #ff9a9e, #fecfef); color: white;" onclick="analytics()">
+                    <i class="fas fa-chart-bar"></i> Analytics Dashboard
+                </button>
+                <button class="btn" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb); color: white;" onclick="auditLogs()">
+                    <i class="fas fa-clipboard-list"></i> Audit Logs
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPlatform = 'ios';
+        
+        function selectPlatform(platform) {
+            selectedPlatform = platform;
+            document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.platform-btn').classList.add('active');
+            
+            const installBtn = document.getElementById('installBtn');
+            if (platform === 'ios') {
+                installBtn.className = 'btn btn-ios';
+                installBtn.innerHTML = '<i class="fab fa-apple"></i> Install eSIM on iOS';
+            } else {
+                installBtn.className = 'btn btn-android';
+                installBtn.innerHTML = '<i class="fab fa-android"></i> Install eSIM on Android';
+            }
+        }
+        
+        function generateQR() {
+            const qrCode = document.getElementById('qrCode');
+            qrCode.innerHTML = '<div style="font-size: 12px; line-height: 1.2;">LPA:1$smdp.nexorasim.com$' + document.getElementById('iccid').textContent + '</div>';
+            qrCode.style.background = 'url("data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" fill="white"/><text x="100" y="100" text-anchor="middle" font-size="8">QR Code Generated</text></svg>') + '")';
+        }
+        
+        function assignNumber() {
+            alert('Phone number assigned successfully to eSIM profile');
+        }
+        
+        function transferNumber() {
+            alert('Number transfer process initiated. You will receive SMS confirmation.');
+        }
+        
+        function installESIM() {
+            if (selectedPlatform === 'ios') {
+                window.location.href = 'https://esimsetup.apple.com/esim_qrcode_provisioning?carddata=LPA:1$smdp.nexorasim.com$' + document.getElementById('iccid').textContent;
+            } else {
+                alert('Android eSIM installation initiated. Please check your device settings.');
+            }
+        }
+        
+        function manageProfiles() {
+            window.location.href = 'modern-esim-management.html';
+        }
+        
+        function bulkProvision() {
+            alert('Bulk provisioning interface opened');
+        }
+        
+        function analytics() {
+            alert('Analytics dashboard opened');
+        }
+        
+        function auditLogs() {
+            alert('Audit logs interface opened');
+        }
+    </script>
+</body>
+</html>

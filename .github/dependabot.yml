@@ -1,0 +1,99 @@
+version: 2
+updates:
+  # .NET dependencies
+  - package-ecosystem: "nuget"
+    directory: "/app/entitlement-server"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Yangon"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "nexoracore/security-team"
+    assignees:
+      - "nexoracore/dev-team"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "security"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Shared models
+  - package-ecosystem: "nuget"
+    directory: "/app/shared"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Yangon"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "nexoracore/security-team"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+
+  # JavaScript dependencies for Cloudflare Workers
+  - package-ecosystem: "npm"
+    directory: "/infra/cloudflare"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "10:00"
+      timezone: "Asia/Yangon"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "nexoracore/security-team"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "cloudflare"
+    versioning-strategy: "increase"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "11:00"
+      timezone: "Asia/Yangon"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "nexoracore/devops-team"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "github-actions"
+      - "ci-cd"
+
+  # Docker dependencies
+  - package-ecosystem: "docker"
+    directory: "/app/smdp-gateway"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+      time: "12:00"
+      timezone: "Asia/Yangon"
+    open-pull-requests-limit: 2
+    reviewers:
+      - "nexoracore/security-team"
+    commit-message:
+      prefix: "docker"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"

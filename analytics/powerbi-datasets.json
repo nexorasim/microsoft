@@ -1,0 +1,261 @@
+{
+  "datasets": [
+    {
+      "name": "NexoraSIM Operations",
+      "description": "Real-time operational metrics and KPIs",
+      "tables": [
+        {
+          "name": "ProfileOperations",
+          "columns": [
+            { "name": "Timestamp", "dataType": "DateTime" },
+            { "name": "ICCID", "dataType": "String" },
+            { "name": "Operation", "dataType": "String" },
+            { "name": "Carrier", "dataType": "String" },
+            { "name": "DeviceType", "dataType": "String" },
+            { "name": "Status", "dataType": "String" },
+            { "name": "Latency", "dataType": "Int64" },
+            { "name": "UserId", "dataType": "String" },
+            { "name": "Region", "dataType": "String" }
+          ],
+          "measures": [
+            {
+              "name": "Success Rate",
+              "expression": "DIVIDE(COUNTROWS(FILTER(ProfileOperations, ProfileOperations[Status] = \"Success\")), COUNTROWS(ProfileOperations))"
+            },
+            {
+              "name": "Average Latency",
+              "expression": "AVERAGE(ProfileOperations[Latency])"
+            },
+            {
+              "name": "Total Operations",
+              "expression": "COUNTROWS(ProfileOperations)"
+            }
+          ]
+        },
+        {
+          "name": "CarrierMetrics",
+          "columns": [
+            { "name": "CarrierCode", "dataType": "String" },
+            { "name": "CarrierName", "dataType": "String" },
+            { "name": "ActiveProfiles", "dataType": "Int64" },
+            { "name": "SuccessRate", "dataType": "Double" },
+            { "name": "AverageLatency", "dataType": "Double" },
+            { "name": "LastUpdated", "dataType": "DateTime" }
+          ]
+        },
+        {
+          "name": "DeviceMetrics",
+          "columns": [
+            { "name": "DeviceId", "dataType": "String" },
+            { "name": "DeviceType", "dataType": "String" },
+            { "name": "Platform", "dataType": "String" },
+            { "name": "ProfileCount", "dataType": "Int64" },
+            { "name": "LastActivity", "dataType": "DateTime" },
+            { "name": "Status", "dataType": "String" }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "name": "ProfileOperations_CarrierMetrics",
+          "fromTable": "ProfileOperations",
+          "fromColumn": "Carrier",
+          "toTable": "CarrierMetrics",
+          "toColumn": "CarrierCode"
+        }
+      ],
+      "rowLevelSecurity": [
+        {
+          "roleName": "Operator",
+          "filterExpression": "[UserId] = USERNAME()"
+        },
+        {
+          "roleName": "CarrierAdmin",
+          "filterExpression": "[Carrier] IN VALUES('UserCarriers')"
+        }
+      ]
+    },
+    {
+      "name": "NexoraSIM Compliance",
+      "description": "Audit trails and compliance reporting",
+      "tables": [
+        {
+          "name": "AuditLogs",
+          "columns": [
+            { "name": "LogId", "dataType": "String" },
+            { "name": "Timestamp", "dataType": "DateTime" },
+            { "name": "UserId", "dataType": "String" },
+            { "name": "UserRole", "dataType": "String" },
+            { "name": "Action", "dataType": "String" },
+            { "name": "ResourceType", "dataType": "String" },
+            { "name": "ResourceId", "dataType": "String" },
+            { "name": "Status", "dataType": "String" },
+            { "name": "IPAddress", "dataType": "String" },
+            { "name": "UserAgent", "dataType": "String" },
+            { "name": "Details", "dataType": "String" }
+          ],
+          "measures": [
+            {
+              "name": "Total Actions",
+              "expression": "COUNTROWS(AuditLogs)"
+            },
+            {
+              "name": "Failed Actions",
+              "expression": "COUNTROWS(FILTER(AuditLogs, AuditLogs[Status] = \"Failed\"))"
+            },
+            {
+              "name": "Unique Users",
+              "expression": "DISTINCTCOUNT(AuditLogs[UserId])"
+            }
+          ]
+        },
+        {
+          "name": "ComplianceMetrics",
+          "columns": [
+            { "name": "MetricDate", "dataType": "DateTime" },
+            { "name": "ComplianceType", "dataType": "String" },
+            { "name": "Score", "dataType": "Double" },
+            { "name": "Violations", "dataType": "Int64" },
+            { "name": "Remediated", "dataType": "Int64" },
+            { "name": "Status", "dataType": "String" }
+          ]
+        }
+      ],
+      "rowLevelSecurity": [
+        {
+          "roleName": "Auditor",
+          "filterExpression": "TRUE()"
+        },
+        {
+          "roleName": "Operator",
+          "filterExpression": "[UserId] = USERNAME()"
+        }
+      ]
+    }
+  ],
+  "reports": [
+    {
+      "name": "Executive Dashboard",
+      "description": "High-level KPIs and trends for executive review",
+      "pages": [
+        {
+          "name": "Overview",
+          "visuals": [
+            {
+              "type": "card",
+              "title": "Total Active Profiles",
+              "measure": "Total Operations",
+              "format": "number"
+            },
+            {
+              "type": "card",
+              "title": "Success Rate",
+              "measure": "Success Rate",
+              "format": "percentage"
+            },
+            {
+              "type": "lineChart",
+              "title": "Operations Trend",
+              "xAxis": "Timestamp",
+              "yAxis": "Total Operations"
+            },
+            {
+              "type": "pieChart",
+              "title": "Carrier Distribution",
+              "category": "Carrier",
+              "value": "ActiveProfiles"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "table": "ProfileOperations",
+          "column": "Timestamp",
+          "type": "relativeDateRange",
+          "value": "Last30Days"
+        }
+      ]
+    },
+    {
+      "name": "Operational Dashboard",
+      "description": "Detailed operational metrics for operators",
+      "pages": [
+        {
+          "name": "Real-time Monitoring",
+          "visuals": [
+            {
+              "type": "table",
+              "title": "Recent Operations",
+              "columns": ["Timestamp", "ICCID", "Operation", "Status", "Latency"]
+            },
+            {
+              "type": "gauge",
+              "title": "Current Success Rate",
+              "measure": "Success Rate",
+              "target": 0.99
+            },
+            {
+              "type": "barChart",
+              "title": "Operations by Carrier",
+              "xAxis": "Carrier",
+              "yAxis": "Total Operations"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Compliance Report",
+      "description": "Audit and compliance reporting for regulatory requirements",
+      "pages": [
+        {
+          "name": "Audit Summary",
+          "visuals": [
+            {
+              "type": "table",
+              "title": "Audit Log Summary",
+              "columns": ["Timestamp", "UserId", "Action", "Status"]
+            },
+            {
+              "type": "matrix",
+              "title": "Actions by User Role",
+              "rows": ["UserRole"],
+              "columns": ["Action"],
+              "values": ["Total Actions"]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "dataRefresh": {
+    "schedule": {
+      "frequency": "hourly",
+      "interval": 1
+    },
+    "notifications": {
+      "onFailure": ["admin@nexorasim.com"],
+      "onSuccess": false
+    }
+  },
+  "security": {
+    "workspaceRoles": [
+      {
+        "role": "Admin",
+        "members": ["admin@nexorasim.com"],
+        "permissions": ["read", "write", "reshare"]
+      },
+      {
+        "role": "Contributor",
+        "members": ["operators@nexorasim.com"],
+        "permissions": ["read", "write"]
+      },
+      {
+        "role": "Viewer",
+        "members": ["auditors@nexorasim.com"],
+        "permissions": ["read"]
+      }
+    ]
+  }
+}

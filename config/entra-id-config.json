@@ -1,0 +1,163 @@
+{
+  "tenantId": "d7ff8066-4e28-4170-9805-b60ec642c442",
+  "appRegistrations": {
+    "nexorasimPortal": {
+      "applicationId": "56b29d70-add0-4e62-a33c-fd1fb44da71a",
+      "objectId": "81ec3d01-bc0f-428f-9527-1c65d204ed6d",
+      "displayName": "NexoraSIM eSIM Enterprise Management",
+      "signInAudience": "AzureADMyOrg",
+      "authority": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442",
+      "requiredResourceAccess": [
+        {
+          "resourceAppId": "00000003-0000-0000-c000-000000000000",
+          "resourceAccess": [
+            {
+              "id": "e1fe6dd8-ba31-4d61-89e7-88639da4683d",
+              "type": "Scope"
+            },
+            {
+              "id": "06da0dbc-49e2-44d2-8312-53f166ab848a",
+              "type": "Scope"
+            }
+          ]
+        }
+      ],
+      "web": {
+        "redirectUris": [
+          "https://nexorasim.powerappsportals.com",
+          "https://nexorasim.powerappsportals.com/auth/callback"
+        ],
+        "logoutUrl": "https://nexorasim.powerappsportals.com"
+      }
+    }
+  },
+  "conditionalAccess": {
+    "policies": [
+      {
+        "displayName": "NexoraSIM - Require MFA for All Users",
+        "state": "enabled",
+        "conditions": {
+          "users": {
+            "includeGroups": ["nexorasim-enterprise-users"]
+          },
+          "applications": {
+            "includeApplications": ["56b29d70-add0-4e62-a33c-fd1fb44da71a"]
+          }
+        },
+        "grantControls": {
+          "operator": "OR",
+          "builtInControls": ["mfa"]
+        }
+      },
+      {
+        "displayName": "NexoraSIM - Block Legacy Authentication",
+        "state": "enabled",
+        "conditions": {
+          "users": {
+            "includeGroups": ["nexorasim-enterprise-users"]
+          },
+          "clientAppTypes": ["exchangeActiveSync", "other"]
+        },
+        "grantControls": {
+          "operator": "OR",
+          "builtInControls": ["block"]
+        }
+      },
+      {
+        "displayName": "NexoraSIM - Require Compliant Device for eSIM Operations",
+        "state": "enabled",
+        "conditions": {
+          "users": {
+            "includeGroups": ["nexorasim-esim-operators"]
+          },
+          "applications": {
+            "includeApplications": ["56b29d70-add0-4e62-a33c-fd1fb44da71a"]
+          }
+        },
+        "grantControls": {
+          "operator": "AND",
+          "builtInControls": ["mfa", "compliantDevice"]
+        }
+      }
+    ]
+  },
+  "rbacRoles": {
+    "customRoles": [
+      {
+        "displayName": "NexoraSIM eSIM Administrator",
+        "description": "Full access to eSIM lifecycle management",
+        "rolePermissions": [
+          {
+            "allowedResourceActions": [
+              "microsoft.directory/applications/create",
+              "microsoft.directory/servicePrincipals/create",
+              "microsoft.intune/deviceManagement/read",
+              "microsoft.intune/deviceManagement/write"
+            ]
+          }
+        ],
+        "isEnabled": true
+      },
+      {
+        "displayName": "NexoraSIM eSIM Operator",
+        "description": "Limited eSIM operations and monitoring",
+        "rolePermissions": [
+          {
+            "allowedResourceActions": [
+              "microsoft.intune/deviceManagement/read",
+              "microsoft.directory/auditLogs/allProperties/read"
+            ]
+          }
+        ],
+        "isEnabled": true
+      },
+      {
+        "displayName": "NexoraSIM Customer",
+        "description": "Self-service eSIM and VPN profile management",
+        "rolePermissions": [
+          {
+            "allowedResourceActions": [
+              "microsoft.directory/users/ownedDevices/read",
+              "microsoft.intune/deviceManagement/ownedDevices/read"
+            ]
+          }
+        ],
+        "isEnabled": true
+      }
+    ]
+  },
+  "pimSettings": {
+    "roleSettings": [
+      {
+        "roleDefinitionId": "nexorasim-esim-admin-role-id",
+        "activationDuration": "PT8H",
+        "activationReqMFA": true,
+        "activationReqJustification": true,
+        "activationReqApproval": true,
+        "approvers": ["nexorasim-security-team"]
+      }
+    ]
+  },
+  "groups": {
+    "securityGroups": [
+      {
+        "displayName": "NexoraSIM Enterprise Users",
+        "mailNickname": "nexorasim-enterprise-users",
+        "description": "All NexoraSIM enterprise users",
+        "securityEnabled": true
+      },
+      {
+        "displayName": "NexoraSIM eSIM Operators",
+        "mailNickname": "nexorasim-esim-operators",
+        "description": "eSIM lifecycle operators",
+        "securityEnabled": true
+      },
+      {
+        "displayName": "NexoraSIM eSIM Administrators",
+        "mailNickname": "nexorasim-esim-admins",
+        "description": "eSIM system administrators",
+        "securityEnabled": true
+      }
+    ]
+  }
+}

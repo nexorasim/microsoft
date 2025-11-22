@@ -1,0 +1,13 @@
+*.log
+*.tmp
+node_modules/
+.env
+.DS_Store
+Thumbs.db
+*.bak
+.vscode/
+.idea/
+dist/
+build/
+obj/
+bin/

@@ -1,0 +1,455 @@
+/* NexoraSIM eSIM Enterprise Management - Professional UI/UX */
+
+:root {
+    --nexora-primary: #1e3a8a;
+    --nexora-secondary: #1f2937;
+    --nexora-accent: #2563eb;
+    --nexora-success: #38a169;
+    --nexora-warning: #d69e2e;
+    --nexora-danger: #e53e3e;
+    --nexora-light: #f7fafc;
+    --nexora-dark: #1a202c;
+    --nexora-border: #e2e8f0;
+    --nexora-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --nexora-shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, var(--nexora-light) 0%, #edf2f7 100%);
+    color: var(--nexora-dark);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation */
+.nexora-navbar {
+    background: linear-gradient(135deg, var(--nexora-primary) 0%, var(--nexora-secondary) 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--nexora-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nexora-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    letter-spacing: -0.025em;
+}
+
+.nexora-brand:hover {
+    color: #bee3f8;
+    transform: translateY(-1px);
+}
+
+.nexora-nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nexora-nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Cards */
+.nexora-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--nexora-shadow);
+    border: 1px solid var(--nexora-border);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.nexora-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--nexora-shadow-lg);
+}
+
+.nexora-card-header {
+    background: linear-gradient(135deg, var(--nexora-accent) 0%, #2c5282 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-bottom: none;
+}
+
+.nexora-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nexora-card-body {
+    padding: 2rem;
+}
+
+/* Status Cards */
+.nexora-status-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: var(--nexora-shadow);
+    border: 1px solid var(--nexora-border);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.nexora-status-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--nexora-accent), var(--nexora-success));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nexora-status-card:hover::before {
+    transform: scaleX(1);
+}
+
+.nexora-status-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--nexora-shadow-lg);
+}
+
+.nexora-status-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.nexora-status-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--nexora-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.nexora-status-badge {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    border-radius: 25px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nexora-status-badge.success {
+    background: var(--nexora-success);
+    color: white;
+}
+
+.nexora-status-badge.warning {
+    background: var(--nexora-warning);
+    color: white;
+}
+
+.nexora-status-badge.danger {
+    background: var(--nexora-danger);
+    color: white;
+}
+
+.nexora-status-badge.secondary {
+    background: #718096;
+    color: white;
+}
+
+/* Forms */
+.nexora-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.nexora-form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--nexora-secondary);
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nexora-form-control {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    border: 2px solid var(--nexora-border);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.nexora-form-control:focus {
+    outline: none;
+    border-color: var(--nexora-accent);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Buttons */
+.nexora-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nexora-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.nexora-btn:hover::before {
+    left: 100%;
+}
+
+.nexora-btn-primary {
+    background: linear-gradient(135deg, var(--nexora-accent) 0%, #2c5282 100%);
+    color: white;
+}
+
+.nexora-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(49, 130, 206, 0.3);
+}
+
+.nexora-btn-success {
+    background: linear-gradient(135deg, var(--nexora-success) 0%, #2f855a 100%);
+    color: white;
+}
+
+.nexora-btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(56, 161, 105, 0.3);
+}
+
+/* Dashboard */
+.nexora-dashboard {
+    background: white;
+    border-radius: 16px;
+    min-height: 500px;
+    box-shadow: var(--nexora-shadow);
+    border: 1px solid var(--nexora-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.nexora-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    color: var(--nexora-secondary);
+}
+
+.nexora-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--nexora-border);
+    border-top: 4px solid var(--nexora-accent);
+    border-radius: 50%;
+    animation: nexora-spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes nexora-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Alerts */
+.nexora-alert {
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.nexora-alert-success {
+    background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+    color: var(--nexora-success);
+    border-left: 4px solid var(--nexora-success);
+}
+
+.nexora-alert-danger {
+    background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+    color: var(--nexora-danger);
+    border-left: 4px solid var(--nexora-danger);
+}
+
+.nexora-alert-warning {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef5e7 100%);
+    color: var(--nexora-warning);
+    border-left: 4px solid var(--nexora-warning);
+}
+
+/* Dropdown */
+.nexora-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nexora-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--nexora-shadow-lg);
+    border: 1px solid var(--nexora-border);
+    min-width: 200px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.nexora-dropdown-item {
+    display: block;
+    padding: 0.875rem 1.25rem;
+    color: var(--nexora-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid var(--nexora-border);
+}
+
+.nexora-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.nexora-dropdown-item:hover {
+    background: var(--nexora-light);
+    color: var(--nexora-primary);
+    transform: translateX(4px);
+}
+
+/* Myanmar Text */
+.myanmar-text {
+    font-family: 'Myanmar Text', 'Pyidaungsu', 'Padauk', 'Myanmar3', sans-serif;
+    font-size: 1.1em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nexora-card-body {
+        padding: 1.5rem;
+    }
+    
+    .nexora-status-card {
+        margin-bottom: 1rem;
+    }
+    
+    .nexora-btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Animations */
+@keyframes nexora-fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nexora-fade-in {
+    animation: nexora-fadeIn 0.6s ease-out;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--nexora-border);
+    text-align: left;
+}
+
+.table th {
+    background-color: var(--nexora-light);
+    font-weight: 600;
+    color: var(--nexora-secondary);
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Utilities */
+.nexora-text-center { text-align: center; }
+.nexora-text-primary { color: var(--nexora-primary); }
+.nexora-text-success { color: var(--nexora-success); }
+.nexora-text-warning { color: var(--nexora-warning); }
+.nexora-text-danger { color: var(--nexora-danger); }
+.text-center { text-align: center; }
+.nexora-mb-0 { margin-bottom: 0; }
+.nexora-mb-1 { margin-bottom: 0.5rem; }
+.nexora-mb-2 { margin-bottom: 1rem; }
+.nexora-mb-3 { margin-bottom: 1.5rem; }
+.nexora-mb-4 { margin-bottom: 2rem; }
+.nexora-mt-2 { margin-top: 1rem; }
+.nexora-mt-3 { margin-top: 1.5rem; }
+.nexora-fw-bold { font-weight: 700; }
+.nexora-fw-semibold { font-weight: 600; }

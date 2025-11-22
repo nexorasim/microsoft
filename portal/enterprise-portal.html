@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexoraSIM Enterprise Portal</title>
+    <link href="https://res.cdn.office.net/files/fabric-cdn-prod_20240101.001/office-ui-fabric-react/css/fabric.min.css" rel="stylesheet">
+    <link href="styles/enterprise.css" rel="stylesheet">
+</head>
+<body class="ms-Fabric">
+    <div id="enterprise-app">
+        <header class="enterprise-header">
+            <div class="header-brand">
+                <img src="assets/nexorasim-logo.svg" alt="NexoraSIM" class="brand-logo">
+                <h1 class="brand-title">NexoraSIM Enterprise Portal</h1>
+            </div>
+            <div class="header-actions">
+                <div class="user-info">
+                    <span id="user-name" class="user-display-name"></span>
+                    <span id="user-role" class="user-role-badge"></span>
+                </div>
+                <button class="ms-Button ms-Button--primary" onclick="signOut()">Sign Out</button>
+            </div>
+        </header>
+
+        <nav class="enterprise-nav">
+            <div class="nav-section">
+                <h3>Operations</h3>
+                <a href="#dashboard" class="nav-link active" data-role="all">Dashboard</a>
+                <a href="#profiles" class="nav-link" data-role="operator,admin">eSIM Profiles</a>
+                <a href="#devices" class="nav-link" data-role="operator,admin">Device Management</a>
+                <a href="#transfers" class="nav-link" data-role="operator,admin">Transfer Operations</a>
+            </div>
+            <div class="nav-section">
+                <h3>Analytics</h3>
+                <a href="#analytics" class="nav-link" data-role="all">Real-time Analytics</a>
+                <a href="#reports" class="nav-link" data-role="auditor,admin">Compliance Reports</a>
+                <a href="#audit" class="nav-link" data-role="auditor,admin">Audit Logs</a>
+            </div>
+            <div class="nav-section">
+                <h3>Administration</h3>
+                <a href="#carriers" class="nav-link" data-role="admin">Carrier Management</a>
+                <a href="#users" class="nav-link" data-role="admin">User Management</a>
+                <a href="#settings" class="nav-link" data-role="admin">System Settings</a>
+            </div>
+        </nav>
+
+        <main class="enterprise-main">
+            <div id="dashboard-view" class="view active">
+                <div class="dashboard-header">
+                    <h2>Operations Dashboard</h2>
+                    <div class="dashboard-filters">
+                        <select id="carrier-filter" class="ms-Dropdown">
+                            <option value="">All Carriers</option>
+                            <option value="MPT">MPT</option>
+                            <option value="ATOM">ATOM</option>
+                            <option value="U9">U9</option>
+                            <option value="MYTEL">MYTEL</option>
+                        </select>
+                        <select id="time-filter" class="ms-Dropdown">
+                            <option value="1h">Last Hour</option>
+                            <option value="24h" selected>Last 24 Hours</option>
+                            <option value="7d">Last 7 Days</option>
+                            <option value="30d">Last 30 Days</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>Active Profiles</h3>
+                            <span class="metric-trend up">↗ 5.2%</span>
+                        </div>
+                        <div class="metric-value" id="active-profiles">12,847</div>
+                        <div class="metric-subtitle">Across all carriers</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>Transfer Success Rate</h3>
+                            <span class="metric-trend up">↗ 0.8%</span>
+                        </div>
+                        <div class="metric-value" id="success-rate">99.2%</div>
+                        <div class="metric-subtitle">Last 24 hours</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>Average Latency</h3>
+                            <span class="metric-trend down">↘ 12ms</span>
+                        </div>
+                        <div class="metric-value" id="avg-latency">89ms</div>
+                        <div class="metric-subtitle">SM-DP+ response time</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>Active Devices</h3>
+                            <span class="metric-trend up">↗ 3.1%</span>
+                        </div>
+                        <div class="metric-value" id="active-devices">8,234</div>
+                        <div class="metric-subtitle">Registered devices</div>
+                    </div>
+                </div>
+
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <h3>Profile Operations Timeline</h3>
+                        <canvas id="operations-chart" width="800" height="300"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Carrier Distribution</h3>
+                        <canvas id="carrier-chart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activity-feed">
+                        <!-- Activity items loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="profiles-view" class="view">
+                <div class="view-header">
+                    <h2>eSIM Profile Management</h2>
+                    <button class="ms-Button ms-Button--primary" onclick="createProfile()">Create Profile</button>
+                </div>
+
+                <div class="search-filters">
+                    <input type="text" id="profile-search" class="ms-TextField" placeholder="Search by ICCID, IMSI, or Device ID">
+                    <select id="status-filter" class="ms-Dropdown">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="suspended">Suspended</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+
+                <div class="data-table">
+                    <table class="ms-Table">
+                        <thead>
+                            <tr>
+                                <th>ICCID</th>
+                                <th>IMSI</th>
+                                <th>Carrier</th>
+                                <th>Device</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="profiles-table-body">
+                            <!-- Profile data loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="analytics-view" class="view">
+                <div class="view-header">
+                    <h2>Real-time Analytics</h2>
+                    <div class="analytics-controls">
+                        <button class="ms-Button" onclick="exportAnalytics('pdf')">Export PDF</button>
+                        <button class="ms-Button" onclick="exportAnalytics('csv')">Export CSV</button>
+                    </div>
+                </div>
+
+                <div class="analytics-dashboard">
+                    <div class="analytics-section">
+                        <h3>Performance Metrics</h3>
+                        <div id="performance-charts"></div>
+                    </div>
+                    <div class="analytics-section">
+                        <h3>Carrier KPIs</h3>
+                        <div id="carrier-kpis"></div>
+                    </div>
+                    <div class="analytics-section">
+                        <h3>Geographic Distribution</h3>
+                        <div id="geo-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="audit-view" class="view">
+                <div class="view-header">
+                    <h2>Audit Logs</h2>
+                    <div class="audit-controls">
+                        <input type="date" id="audit-start-date" class="ms-TextField">
+                        <input type="date" id="audit-end-date" class="ms-TextField">
+                        <button class="ms-Button ms-Button--primary" onclick="searchAuditLogs()">Search</button>
+                    </div>
+                </div>
+
+                <div class="audit-table">
+                    <table class="ms-Table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Resource</th>
+                                <th>Status</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/@microsoft/mgt@3/dist/bundle/mgt-loader.js"></script>
+    <script src="scripts/enterprise-portal.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/analytics.js"></script>
+</body>
+</html>

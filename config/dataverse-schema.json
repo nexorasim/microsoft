@@ -1,0 +1,286 @@
+{
+  "tables": {
+    "nexorasim_orders": {
+      "displayName": "Orders",
+      "pluralDisplayName": "Orders",
+      "description": "eSIM and VPN profile orders",
+      "columns": [
+        {
+          "schemaName": "nexorasim_orderid",
+          "displayName": "Order ID",
+          "dataType": "Uniqueidentifier",
+          "isPrimaryKey": true
+        },
+        {
+          "schemaName": "nexorasim_customerid",
+          "displayName": "Customer ID",
+          "dataType": "String",
+          "maxLength": 100,
+          "isRequired": true
+        },
+        {
+          "schemaName": "nexorasim_carriercode",
+          "displayName": "Carrier Code",
+          "dataType": "Picklist",
+          "options": ["MPT", "ATOM", "U9", "MYTEL"]
+        },
+        {
+          "schemaName": "nexorasim_ordertype",
+          "displayName": "Order Type",
+          "dataType": "Picklist",
+          "options": ["eSIM", "VPN", "Bundle"]
+        },
+        {
+          "schemaName": "nexorasim_status",
+          "displayName": "Status",
+          "dataType": "Picklist",
+          "options": ["Pending", "Processing", "Completed", "Failed", "Cancelled"]
+        },
+        {
+          "schemaName": "nexorasim_createdon",
+          "displayName": "Created On",
+          "dataType": "DateTime",
+          "isRequired": true
+        }
+      ]
+    },
+    "nexorasim_profiles": {
+      "displayName": "Profiles",
+      "pluralDisplayName": "Profiles",
+      "description": "eSIM and VPN profiles",
+      "columns": [
+        {
+          "schemaName": "nexorasim_profileid",
+          "displayName": "Profile ID",
+          "dataType": "Uniqueidentifier",
+          "isPrimaryKey": true
+        },
+        {
+          "schemaName": "nexorasim_iccid",
+          "displayName": "ICCID",
+          "dataType": "String",
+          "maxLength": 22
+        },
+        {
+          "schemaName": "nexorasim_activationcode",
+          "displayName": "Activation Code",
+          "dataType": "String",
+          "maxLength": 200
+        },
+        {
+          "schemaName": "nexorasim_carriercode",
+          "displayName": "Carrier Code",
+          "dataType": "Picklist",
+          "options": ["MPT", "ATOM", "U9", "MYTEL"]
+        },
+        {
+          "schemaName": "nexorasim_profiletype",
+          "displayName": "Profile Type",
+          "dataType": "Picklist",
+          "options": ["eSIM", "VPN"]
+        },
+        {
+          "schemaName": "nexorasim_status",
+          "displayName": "Status",
+          "dataType": "Picklist",
+          "options": ["Downloaded", "Installed", "Activated", "Suspended", "Deleted"]
+        },
+        {
+          "schemaName": "nexorasim_expirydate",
+          "displayName": "Expiry Date",
+          "dataType": "DateTime"
+        }
+      ]
+    },
+    "nexorasim_carriers": {
+      "displayName": "Carriers",
+      "pluralDisplayName": "Carriers",
+      "description": "Mobile network carriers configuration",
+      "columns": [
+        {
+          "schemaName": "nexorasim_carrierid",
+          "displayName": "Carrier ID",
+          "dataType": "Uniqueidentifier",
+          "isPrimaryKey": true
+        },
+        {
+          "schemaName": "nexorasim_carriercode",
+          "displayName": "Carrier Code",
+          "dataType": "String",
+          "maxLength": 10,
+          "isRequired": true
+        },
+        {
+          "schemaName": "nexorasim_carriername",
+          "displayName": "Carrier Name",
+          "dataType": "String",
+          "maxLength": 100,
+          "isRequired": true
+        },
+        {
+          "schemaName": "nexorasim_smdpaddress",
+          "displayName": "SMDP Address",
+          "dataType": "String",
+          "maxLength": 200
+        },
+        {
+          "schemaName": "nexorasim_apiendpoint",
+          "displayName": "API Endpoint",
+          "dataType": "String",
+          "maxLength": 500
+        },
+        {
+          "schemaName": "nexorasim_vpnserver",
+          "displayName": "VPN Server",
+          "dataType": "String",
+          "maxLength": 200
+        },
+        {
+          "schemaName": "nexorasim_isactive",
+          "displayName": "Is Active",
+          "dataType": "TwoOptions",
+          "defaultValue": true
+        }
+      ]
+    },
+    "nexorasim_auditevents": {
+      "displayName": "Audit Events",
+      "pluralDisplayName": "Audit Events",
+      "description": "Immutable audit trail for compliance",
+      "columns": [
+        {
+          "schemaName": "nexorasim_auditeventid",
+          "displayName": "Audit Event ID",
+          "dataType": "Uniqueidentifier",
+          "isPrimaryKey": true
+        },
+        {
+          "schemaName": "nexorasim_timestamp",
+          "displayName": "Timestamp",
+          "dataType": "DateTime",
+          "isRequired": true
+        },
+        {
+          "schemaName": "nexorasim_action",
+          "displayName": "Action",
+          "dataType": "String",
+          "maxLength": 100,
+          "isRequired": true
+        },
+        {
+          "schemaName": "nexorasim_userid",
+          "displayName": "User ID",
+          "dataType": "String",
+          "maxLength": 100
+        },
+        {
+          "schemaName": "nexorasim_deviceid",
+          "displayName": "Device ID",
+          "dataType": "String",
+          "maxLength": 100
+        },
+        {
+          "schemaName": "nexorasim_iccid",
+          "displayName": "ICCID",
+          "dataType": "String",
+          "maxLength": 22
+        },
+        {
+          "schemaName": "nexorasim_carriercode",
+          "displayName": "Carrier Code",
+          "dataType": "String",
+          "maxLength": 10
+        },
+        {
+          "schemaName": "nexorasim_details",
+          "displayName": "Details",
+          "dataType": "Memo"
+        },
+        {
+          "schemaName": "nexorasim_source",
+          "displayName": "Source",
+          "dataType": "String",
+          "maxLength": 100
+        },
+        {
+          "schemaName": "nexorasim_hash",
+          "displayName": "Hash",
+          "dataType": "String",
+          "maxLength": 64,
+          "description": "SHA-256 hash for immutability"
+        }
+      ]
+    },
+    "nexorasim_entitlements": {
+      "displayName": "Entitlements",
+      "pluralDisplayName": "Entitlements",
+      "description": "User entitlements and permissions",
+      "columns": [
+        {
+          "schemaName": "nexorasim_entitlementid",
+          "displayName": "Entitlement ID",
+          "dataType": "Uniqueidentifier",
+          "isPrimaryKey": true
+        },
+        {
+          "schemaName": "nexorasim_userid",
+          "displayName": "User ID",
+          "dataType": "String",
+          "maxLength": 100,
+          "isRequired": true
+        },
+        {
+          "schemaName": "nexorasim_carriercode",
+          "displayName": "Carrier Code",
+          "dataType": "Picklist",
+          "options": ["MPT", "ATOM", "U9", "MYTEL"]
+        },
+        {
+          "schemaName": "nexorasim_entitlementtype",
+          "displayName": "Entitlement Type",
+          "dataType": "Picklist",
+          "options": ["eSIM_Download", "eSIM_Activate", "VPN_Access", "Dashboard_View", "Admin_Access"]
+        },
+        {
+          "schemaName": "nexorasim_maxallocation",
+          "displayName": "Max Allocation",
+          "dataType": "WholeNumber",
+          "defaultValue": 1
+        },
+        {
+          "schemaName": "nexorasim_currentusage",
+          "displayName": "Current Usage",
+          "dataType": "WholeNumber",
+          "defaultValue": 0
+        },
+        {
+          "schemaName": "nexorasim_validfrom",
+          "displayName": "Valid From",
+          "dataType": "DateTime",
+          "isRequired": true
+        },
+        {
+          "schemaName": "nexorasim_validto",
+          "displayName": "Valid To",
+          "dataType": "DateTime"
+        }
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "schemaName": "nexorasim_order_profile",
+      "referencingTable": "nexorasim_profiles",
+      "referencingColumn": "nexorasim_orderid",
+      "referencedTable": "nexorasim_orders",
+      "referencedColumn": "nexorasim_orderid"
+    },
+    {
+      "schemaName": "nexorasim_profile_carrier",
+      "referencingTable": "nexorasim_profiles",
+      "referencingColumn": "nexorasim_carrierid",
+      "referencedTable": "nexorasim_carriers",
+      "referencedColumn": "nexorasim_carrierid"
+    }
+  ]
+}

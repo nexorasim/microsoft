@@ -1,0 +1,173 @@
+{
+  "tenant": "d7ff8066-4e28-4170-9805-b60ec642c442",
+  "applications": [
+    {
+      "displayName": "NexoraSIM Enterprise Portal",
+      "signInAudience": "AzureADMyOrg",
+      "web": {
+        "redirectUris": [
+          "https://portal.esim.com.mm/signin-oidc",
+          "https://portal.esim.com.mm/auth/callback"
+        ],
+        "logoutUrl": "https://portal.esim.com.mm/signout",
+        "implicitGrantSettings": {
+          "enableIdTokenIssuance": true,
+          "enableAccessTokenIssuance": false
+        }
+      },
+      "requiredResourceAccess": [
+        {
+          "resourceAppId": "00000003-0000-0000-c000-000000000000",
+          "resourceAccess": [
+            {
+              "id": "e1fe6dd8-ba31-4d61-89e7-88639da4683d",
+              "type": "Scope"
+            },
+            {
+              "id": "64a6cdd6-aab1-4aaf-94b8-3cc8405e90d0",
+              "type": "Scope"
+            }
+          ]
+        }
+      ],
+      "appRoles": [
+        {
+          "allowedMemberTypes": ["User"],
+          "description": "Full administrative access to NexoraSIM platform",
+          "displayName": "NexoraSIM Administrator",
+          "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+          "isEnabled": true,
+          "value": "NexoraSIM.Admin"
+        },
+        {
+          "allowedMemberTypes": ["User"],
+          "description": "Operator access for eSIM profile management",
+          "displayName": "NexoraSIM Operator",
+          "id": "b2c3d4e5-f6g7-8901-bcde-f23456789012",
+          "isEnabled": true,
+          "value": "NexoraSIM.Operator"
+        },
+        {
+          "allowedMemberTypes": ["User"],
+          "description": "Auditor access for compliance and reporting",
+          "displayName": "NexoraSIM Auditor",
+          "id": "c3d4e5f6-g7h8-9012-cdef-345678901234",
+          "isEnabled": true,
+          "value": "NexoraSIM.Auditor"
+        },
+        {
+          "allowedMemberTypes": ["User"],
+          "description": "Read-only access to NexoraSIM platform",
+          "displayName": "NexoraSIM Reader",
+          "id": "d4e5f6g7-h8i9-0123-def0-456789012345",
+          "isEnabled": true,
+          "value": "NexoraSIM.Reader"
+        }
+      ]
+    },
+    {
+      "displayName": "NexoraSIM API Service",
+      "signInAudience": "AzureADMyOrg",
+      "identifierUris": ["api://nexorasim-api"],
+      "appRoles": [
+        {
+          "allowedMemberTypes": ["Application"],
+          "description": "Access to entitlement server APIs",
+          "displayName": "Entitlement API Access",
+          "id": "e5f6g7h8-i9j0-1234-efg1-567890123456",
+          "isEnabled": true,
+          "value": "EntitlementAPI.Access"
+        }
+      ],
+      "api": {
+        "oauth2PermissionScopes": [
+          {
+            "adminConsentDescription": "Access NexoraSIM entitlement APIs",
+            "adminConsentDisplayName": "Access entitlement APIs",
+            "id": "f6g7h8i9-j0k1-2345-fgh2-678901234567",
+            "isEnabled": true,
+            "type": "User",
+            "userConsentDescription": "Access your eSIM entitlements",
+            "userConsentDisplayName": "Access eSIM entitlements",
+            "value": "Entitlement.ReadWrite"
+          }
+        ]
+      }
+    }
+  ],
+  "conditionalAccess": {
+    "policies": [
+      {
+        "displayName": "NexoraSIM MFA Requirement",
+        "state": "enabled",
+        "conditions": {
+          "applications": {
+            "includeApplications": ["All"]
+          },
+          "users": {
+            "includeRoles": [
+              "NexoraSIM.Admin",
+              "NexoraSIM.Operator"
+            ]
+          }
+        },
+        "grantControls": {
+          "operator": "AND",
+          "builtInControls": ["mfa", "compliantDevice"]
+        }
+      },
+      {
+        "displayName": "NexoraSIM Location-Based Access",
+        "state": "enabled",
+        "conditions": {
+          "applications": {
+            "includeApplications": ["All"]
+          },
+          "locations": {
+            "includeLocations": ["AllTrusted"],
+            "excludeLocations": ["MfaTrustedIps"]
+          }
+        },
+        "grantControls": {
+          "operator": "OR",
+          "builtInControls": ["block"]
+        }
+      }
+    ]
+  },
+  "rbacRoles": [
+    {
+      "roleName": "NexoraSIM Platform Administrator",
+      "description": "Full access to all NexoraSIM resources and configurations",
+      "permissions": [
+        "Microsoft.Authorization/*/read",
+        "Microsoft.Authorization/*/write",
+        "Microsoft.KeyVault/*/read",
+        "Microsoft.KeyVault/*/write",
+        "Microsoft.DocumentDB/*/read",
+        "Microsoft.DocumentDB/*/write",
+        "Microsoft.Web/sites/*/read",
+        "Microsoft.Web/sites/*/write"
+      ]
+    },
+    {
+      "roleName": "NexoraSIM Operator",
+      "description": "Operational access to eSIM profile management",
+      "permissions": [
+        "Microsoft.DocumentDB/*/read",
+        "Microsoft.Web/sites/functions/read",
+        "Microsoft.Insights/*/read"
+      ]
+    },
+    {
+      "roleName": "NexoraSIM Auditor",
+      "description": "Read-only access for compliance and audit purposes",
+      "permissions": [
+        "Microsoft.DocumentDB/*/read",
+        "Microsoft.Sql/*/read",
+        "Microsoft.Insights/*/read",
+        "Microsoft.Authorization/*/read"
+      ]
+    }
+  ]
+}

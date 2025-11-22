@@ -1,0 +1,100 @@
+{
+  "app": {
+    "name": "NexoraSIM Enterprise",
+    "tagline": "eSIM Management Portal for Myanmar",
+    "version": "1.0.0"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "profiles": "eSIM Profiles",
+    "devices": "Devices",
+    "carriers": "Carriers",
+    "users": "Users",
+    "audit": "Audit Logs",
+    "settings": "Settings",
+    "help": "Help"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "update": "Update",
+    "refresh": "Refresh",
+    "export": "Export",
+    "import": "Import",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "download": "Download",
+    "upload": "Upload"
+  },
+  "esim": {
+    "profile": "eSIM Profile",
+    "profiles": "eSIM Profiles",
+    "activation": "Activation",
+    "deactivation": "Deactivation",
+    "transfer": "Transfer",
+    "suspend": "Suspend",
+    "resume": "Resume",
+    "delete_profile": "Delete Profile",
+    "iccid": "ICCID",
+    "imsi": "IMSI",
+    "eid": "EID",
+    "activation_code": "Activation Code",
+    "smdp_address": "SM-DP+ Address",
+    "carrier_code": "Carrier Code",
+    "status": {
+      "created": "Created",
+      "downloaded": "Downloaded", 
+      "installed": "Installed",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "deleted": "Deleted"
+    }
+  },
+  "devices": {
+    "device": "Device",
+    "device_id": "Device ID",
+    "device_type": "Device Type",
+    "platform": "Platform",
+    "model": "Model",
+    "os_version": "OS Version",
+    "registered_at": "Registered At",
+    "capability": {
+      "single_esim": "Single eSIM",
+      "dual_esim": "Dual eSIM", 
+      "multiple_esim": "Multiple eSIM"
+    }
+  },
+  "carriers": {
+    "carrier": "Carrier",
+    "carrier_name": "Carrier Name",
+    "mcc": "MCC",
+    "mnc": "MNC",
+    "country": "Country",
+    "supports_5g": "5G Support",
+    "supports_volte": "VoLTE Support",
+    "mpt": "Myanmar Posts and Telecommunications",
+    "telenor": "Telenor Myanmar",
+    "ooredoo": "Ooredoo Myanmar",
+    "mytel": "MyTel"
+  },
+  "messages": {
+    "success": {
+      "profile_activated": "eSIM profile activated successfully",
+      "profile_transferred": "eSIM profile transferred successfully",
+      "device_registered": "Device registered successfully",
+      "settings_saved": "Settings saved successfully"
+    },
+    "error": {
+      "activation_failed": "Profile activation failed",
+      "transfer_failed": "Profile transfer failed",
+      "registration_failed": "Device registration failed",
+      "network_error": "Network connection error",
+      "unauthorized": "Unauthorized access",
+      "invalid_input": "Invalid input data"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "vpnProfiles": {
+    "alwaysOnVPN": {
+      "displayName": "NexoraSIM Enterprise Always On VPN",
+      "description": "Enterprise VPN with Always On configuration for NexoraSIM users",
+      "connectionType": "IKEv2",
+      "authenticationMethod": "Certificate",
+      "servers": [
+        {
+          "description": "Primary VPN Server",
+          "address": "vpn.nexorasim.com",
+          "isDefaultServer": true
+        }
+      ],
+      "alwaysOn": true,
+      "bypassVpnOnCompanyWifi": false,
+      "enableSplitTunneling": false,
+      "enableConditionalAccess": true,
+      "rememberUserCredentials": false,
+      "trustedNetworkDomains": ["nexorasim.com"],
+      "routes": [
+        {
+          "destinationPrefix": "10.0.0.0/8",
+          "prefixSize": 8
+        },
+        {
+          "destinationPrefix": "172.16.0.0/12",
+          "prefixSize": 12
+        }
+      ]
+    }
+  },
+  "compliancePolicies": {
+    "vpnCompliance": {
+      "displayName": "NexoraSIM VPN Compliance Policy",
+      "description": "Ensures VPN is always connected for enterprise access",
+      "scheduledActionsForRule": [
+        {
+          "ruleName": "PasswordRequired",
+          "scheduledActionConfigurations": [
+            {
+              "actionType": "block",
+              "gracePeriodHours": 0,
+              "notificationTemplateId": "vpn-compliance-notification"
+            }
+          ]
+        }
+      ],
+      "deviceThreatProtectionEnabled": true,
+      "deviceThreatProtectionRequiredSecurityLevel": "medium",
+      "advancedThreatProtectionRequiredSecurityLevel": "medium"
+    }
+  },
+  "certificateProfiles": {
+    "vpnClientCert": {
+      "displayName": "NexoraSIM VPN Client Certificate",
+      "description": "Client certificate for VPN authentication",
+      "certificateValidityPeriodValue": 2,
+      "certificateValidityPeriodScale": "years",
+      "renewalThresholdPercentage": 20,
+      "keyStorageProvider": "useTpmKspOtherwiseUseSoftwareKsp",
+      "subjectNameFormat": "commonNameIncludingEmail",
+      "subjectAlternativeNameType": "userPrincipalName",
+      "certificateTemplateName": "NexoraSIMVPNClient"
+    }
+  },
+  "assignments": {
+    "targetGroups": [
+      {
+        "groupId": "nexorasim-enterprise-users",
+        "assignmentType": "include"
+      },
+      {
+        "groupId": "nexorasim-esim-operators",
+        "assignmentType": "include"
+      }
+    ],
+    "excludeGroups": [
+      {
+        "groupId": "nexorasim-guest-users",
+        "assignmentType": "exclude"
+      }
+    ]
+  }
+}

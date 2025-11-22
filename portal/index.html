@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexoraSIM eSIM Enterprise Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="nexorasim-portal.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nexora-navbar">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center py-3">
+                <a href="#" class="nexora-brand">
+                    <i class="fas fa-sim-card me-2"></i>
+                    NexoraSIM eSIM Enterprise Management
+                </a>
+                <div class="d-flex align-items-center">
+                    <div class="nexora-dropdown me-3">
+                        <a href="#" class="nexora-nav-link" onclick="toggleDropdown()">
+                            <i class="fas fa-language me-1"></i>
+                            <span id="currentLang">English</span>
+                            <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                        <div class="nexora-dropdown-menu" id="langDropdown" style="display: none;">
+                            <a href="#" class="nexora-dropdown-item" onclick="switchLanguage('en')">English</a>
+                            <a href="#" class="nexora-dropdown-item myanmar-text" onclick="switchLanguage('my')">မြန်မာ</a>
+                        </div>
+                    </div>
+                    <a href="#" class="nexora-nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt me-1"></i>
+                        <span data-i18n="logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Device Initialization -->
+        <div class="nexora-card nexora-fade-in">
+            <div class="nexora-card-header">
+                <h2 class="nexora-card-title">
+                    <i class="fas fa-mobile-alt me-2"></i>
+                    <span data-i18n="deviceInit">Enterprise Device Provisioning</span>
+                </h2>
+            </div>
+            <div class="nexora-card-body">
+                <form id="deviceInitForm">
+                    <div class="row">
+                        <div class="col-md-3 nexora-form-group">
+                            <label class="nexora-form-label" data-i18n="platform">Device Platform</label>
+                            <select class="nexora-form-control" id="platform" required>
+                                <option value="">Select Device Platform</option>
+                                <option value="Windows">Windows Enterprise</option>
+                                <option value="iOS">iOS Enterprise (MDM)</option>
+                                <option value="Android">Android Enterprise</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 nexora-form-group">
+                            <label class="nexora-form-label" data-i18n="carrier">Network Operator</label>
+                            <select class="nexora-form-control" id="carrierCode" required>
+                                <option value="">Select Network Operator</option>
+                                <option value="MPT">MPT (Myanmar Posts and Telecommunications)</option>
+                                <option value="ATOM">ATOM Myanmar</option>
+                                <option value="U9">U9 Networks</option>
+                                <option value="MYTEL">MYTEL</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 nexora-form-group">
+                            <label class="nexora-form-label" data-i18n="iccid">eSIM ICCID</label>
+                            <input type="text" class="nexora-form-control" id="iccid" placeholder="20-digit ICCID" maxlength="22">
+                        </div>
+                        <div class="col-md-3 nexora-form-group">
+                            <label class="nexora-form-label">&nbsp;</label>
+                            <button type="submit" class="nexora-btn nexora-btn-primary w-100">
+                                <i class="fas fa-cog me-2"></i>
+                                <span data-i18n="initialize">Provision Enterprise Device</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div id="initResult" class="nexora-mt-3" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Status Dashboard -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="nexora-status-card nexora-fade-in">
+                    <i class="fas fa-shield-alt nexora-status-icon nexora-text-success"></i>
+                    <div class="nexora-status-title" data-i18n="vpnStatus">VPN Status</div>
+                    <span id="vpnStatusBadge" class="nexora-status-badge secondary">Checking...</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="nexora-status-card nexora-fade-in">
+                    <i class="fas fa-sim-card nexora-status-icon nexora-text-primary"></i>
+                    <div class="nexora-status-title" data-i18n="esimStatus">eSIM Status</div>
+                    <span id="esimStatusBadge" class="nexora-status-badge secondary">Not Configured</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="nexora-status-card nexora-fade-in">
+                    <i class="fas fa-cloud nexora-status-icon nexora-text-primary"></i>
+                    <div class="nexora-status-title" data-i18n="driveStatus">Drive Status</div>
+                    <span id="driveStatusBadge" class="nexora-status-badge secondary">Checking...</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="nexora-status-card nexora-fade-in">
+                    <i class="fas fa-check-circle nexora-status-icon nexora-text-warning"></i>
+                    <div class="nexora-status-title" data-i18n="complianceStatus">Compliance</div>
+                    <span id="complianceStatusBadge" class="nexora-status-badge secondary">Checking...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Dashboard -->
+        <div class="nexora-card nexora-fade-in">
+            <div class="nexora-card-header">
+                <h2 class="nexora-card-title">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    <span data-i18n="analytics">Analytics Dashboard</span>
+                </h2>
+            </div>
+            <div class="nexora-card-body">
+                <div class="nexora-dashboard" id="powerBIContainer">
+                    <div class="nexora-loading" id="dashboardLoading">
+                        <div class="nexora-spinner"></div>
+                        <p data-i18n="loadingDashboard">Loading analytics dashboard...</p>
+                    </div>
+                    <iframe id="powerBIFrame" width="100%" height="450" frameborder="0" style="display: none;"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enterprise Management Portal Link -->
+        <div class="nexora-card nexora-fade-in" id="enterpriseManagement">
+            <div class="nexora-card-header">
+                <h2 class="nexora-card-title">
+                    <i class="fas fa-cogs me-2"></i>
+                    Enterprise eSIM Management Portal
+                </h2>
+            </div>
+            <div class="nexora-card-body nexora-text-center">
+                <p class="mb-4">Access the full enterprise eSIM management portal for advanced lifecycle operations, Apple Business Manager integration, and Microsoft Entra ID device management.</p>
+                <a href="esim-management.html" class="nexora-btn nexora-btn-primary">
+                    <i class="fas fa-external-link-alt me-2"></i>
+                    Open Enterprise Management Portal
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="nexorasim-portal.js"></script>
+</body>
+</html>

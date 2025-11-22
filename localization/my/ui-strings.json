@@ -1,0 +1,100 @@
+{
+  "app": {
+    "name": "NexoraSIM Enterprise",
+    "tagline": "မြန်မာနိုင်ငံအတွက် eSIM စီမံခန့်ခွဲမှု ပေါ်တယ်",
+    "version": "1.0.0"
+  },
+  "navigation": {
+    "dashboard": "ဒက်ရှ်ဘုတ်",
+    "profiles": "eSIM ပရိုဖိုင်းများ",
+    "devices": "ကိရိယာများ",
+    "carriers": "ဆက်သွယ်ရေးကုမ္ပဏီများ",
+    "users": "အသုံးပြုသူများ",
+    "audit": "စာရင်းစစ်မှတ်တမ်းများ",
+    "settings": "ဆက်တင်များ",
+    "help": "အကူအညီ"
+  },
+  "actions": {
+    "save": "သိမ်းဆည်းရန်",
+    "cancel": "ပယ်ဖျက်ရန်",
+    "delete": "ဖျက်ရန်",
+    "edit": "ပြင်ဆင်ရန်",
+    "create": "ဖန်တီးရန်",
+    "update": "အပ်ဒိတ်လုပ်ရန်",
+    "refresh": "ပြန်လည်ဖွင့်ရန်",
+    "export": "ထုတ်ယူရန်",
+    "import": "ထည့်သွင်းရန်",
+    "search": "ရှာဖွေရန်",
+    "filter": "စစ်ထုတ်ရန်",
+    "sort": "စီစဉ်ရန်",
+    "download": "ဒေါင်းလုဒ်လုပ်ရန်",
+    "upload": "အပ်လုဒ်လုပ်ရန်"
+  },
+  "esim": {
+    "profile": "eSIM ပရိုဖိုင်း",
+    "profiles": "eSIM ပရိုဖိုင်းများ",
+    "activation": "အသက်ဝင်စေခြင်း",
+    "deactivation": "အသက်ပိတ်ခြင်း",
+    "transfer": "လွှဲပြောင်းခြင်း",
+    "suspend": "ရပ်ဆိုင်းခြင်း",
+    "resume": "ပြန်လည်စတင်ခြင်း",
+    "delete_profile": "ပရိုဖိုင်း ဖျက်ခြင်း",
+    "iccid": "ICCID",
+    "imsi": "IMSI",
+    "eid": "EID",
+    "activation_code": "အသက်ဝင်စေမှု ကုဒ်",
+    "smdp_address": "SM-DP+ လိပ်စာ",
+    "carrier_code": "ဆက်သွယ်ရေး ကုဒ်",
+    "status": {
+      "created": "ဖန်တီးပြီး",
+      "downloaded": "ဒေါင်းလုဒ်လုပ်ပြီး",
+      "installed": "ထည့်သွင်းပြီး",
+      "enabled": "အသုံးပြုနိုင်သော",
+      "disabled": "အသုံးပြုမရသော",
+      "deleted": "ဖျက်ပြီး"
+    }
+  },
+  "devices": {
+    "device": "ကိရိယာ",
+    "device_id": "ကိရိယာ အမှတ်",
+    "device_type": "ကိရိယာ အမျိုးအစား",
+    "platform": "ပလပ်ဖောင်း",
+    "model": "မော်ဒယ်",
+    "os_version": "OS ဗားရှင်း",
+    "registered_at": "မှတ်ပုံတင်ထားသည့် ရက်စွဲ",
+    "capability": {
+      "single_esim": "eSIM တစ်ခုတည်း",
+      "dual_esim": "eSIM နှစ်ခု",
+      "multiple_esim": "eSIM များစွာ"
+    }
+  },
+  "carriers": {
+    "carrier": "ဆက်သွယ်ရေးကုမ္ပဏီ",
+    "carrier_name": "ဆက်သွယ်ရေးကုမ္ပဏီ အမည်",
+    "mcc": "MCC",
+    "mnc": "MNC",
+    "country": "နိုင်ငံ",
+    "supports_5g": "5G ပံ့ပိုးမှု",
+    "supports_volte": "VoLTE ပံ့ပိုးမှု",
+    "mpt": "မြန်မာ့ဆက်သွယ်ရေး",
+    "telenor": "တယ်လီနော် မြန်မာ",
+    "ooredoo": "ဦးရီဒူး မြန်မာ",
+    "mytel": "မိုင်တယ်"
+  },
+  "messages": {
+    "success": {
+      "profile_activated": "eSIM ပရိုဖိုင်း အသက်ဝင်စေမှု အောင်မြင်ပါသည်",
+      "profile_transferred": "eSIM ပရိုဖိုင်း လွှဲပြောင်းမှု အောင်မြင်ပါသည်",
+      "device_registered": "ကိရိယာ မှတ်ပုံတင်မှု အောင်မြင်ပါသည်",
+      "settings_saved": "ဆက်တင်များ သိမ်းဆည်းမှု အောင်မြင်ပါသည်"
+    },
+    "error": {
+      "activation_failed": "ပရိုဖိုင်း အသက်ဝင်စေမှု မအောင်မြင်ပါ",
+      "transfer_failed": "ပရိုဖိုင်း လွှဲပြောင်းမှု မအောင်မြင်ပါ",
+      "registration_failed": "ကိရိယာ မှတ်ပုံတင်မှု မအောင်မြင်ပါ",
+      "network_error": "ကွန်ယက် ချိတ်ဆက်မှု အမှား",
+      "unauthorized": "ခွင့်ပြုချက် မရှိသော ဝင်ရောက်မှု",
+      "invalid_input": "မမှန်ကန်သော ထည့်သွင်းမှု အချက်အလက်"
+    }
+  }
+}

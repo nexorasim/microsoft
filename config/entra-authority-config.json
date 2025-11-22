@@ -1,0 +1,38 @@
+{
+  "tenantId": "d7ff8066-4e28-4170-9805-b60ec642c442",
+  "applicationId": "56b29d70-add0-4e62-a33c-fd1fb44da71a",
+  "objectId": "81ec3d01-bc0f-428f-9527-1c65d204ed6d",
+  "authority": {
+    "organizational": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442",
+    "multiTenant": "https://login.microsoftonline.com/organizations",
+    "common": "https://login.microsoftonline.com/common",
+    "consumers": "https://login.microsoftonline.com/consumers"
+  },
+  "endpoints": {
+    "oauth2": {
+      "v2": {
+        "authorize": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/oauth2/v2.0/authorize",
+        "token": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/oauth2/v2.0/token"
+      },
+      "v1": {
+        "authorize": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/oauth2/authorize",
+        "token": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/oauth2/token"
+      }
+    },
+    "saml": {
+      "signOn": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/saml2",
+      "signOut": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/saml2"
+    },
+    "wsFederation": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/wsfed",
+    "metadata": {
+      "federation": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/federationmetadata/2007-06/federationmetadata.xml",
+      "openIdConnect": "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/v2.0/.well-known/openid-configuration"
+    },
+    "graph": "https://graph.microsoft.com/v1.0"
+  },
+  "scopes": [
+    "https://graph.microsoft.com/User.Read",
+    "https://graph.microsoft.com/DeviceManagementConfiguration.ReadWrite.All",
+    "https://graph.microsoft.com/Directory.ReadWrite.All"
+  ]
+}

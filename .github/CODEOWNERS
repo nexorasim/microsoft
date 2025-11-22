@@ -1,0 +1,23 @@
+# Global ownership
+* @nexoracore/dev-leads
+
+# Security and compliance
+/.github/workflows/ @nexoracore/security-team @nexoracore/devops-team
+/.github/dependabot.yml @nexoracore/security-team
+/.github/SECURITY.md @nexoracore/security-team
+/docs/COMPLIANCE.md @nexoracore/compliance-team
+
+# Infrastructure
+/infra/ @nexoracore/devops-team @nexoracore/security-team
+/scripts/ @nexoracore/devops-team
+
+# Application code
+/app/ @nexoracore/dev-team @nexoracore/dev-leads
+
+# Localization
+/localization/ @nexoracore/localization-team
+/docs/LOCALIZATION.md @nexoracore/localization-team
+
+# Audit and compliance
+/audit/ @nexoracore/compliance-team @nexoracore/security-team
+CHANGELOG.md @nexoracore/dev-leads @nexoracore/compliance-team

@@ -1,0 +1,63 @@
+{
+  "enterpriseApplications": {
+    "nexorasimMain": {
+      "displayName": "NexoraSIM",
+      "appId": "40594035-9169-4ff7-9422-9728a141f5a2",
+      "objectId": "3ae58db6-31e9-4042-be60-7306c54b7d01",
+      "servicePrincipalId": "create-required",
+      "assignmentRequired": true,
+      "visibleToUsers": true
+    },
+    "nexorasimBot": {
+      "displayName": "NexoraSIM bot (Microsoft Copilot Studio)",
+      "appId": "1cdec2e9-1072-48a1-92c8-962c30f1a2f0",
+      "objectId": "4a77452e-4742-40aa-8cea-0721b379b390",
+      "servicePrincipalId": "40005058-3524-4e3e-9bb0-08466a8ecdc0",
+      "assignmentRequired": false,
+      "visibleToUsers": true
+    }
+  },
+  "userAssignments": {
+    "nexorasimEnterpriseUsers": {
+      "groupName": "NexoraSIM Enterprise Users",
+      "applications": ["40594035-9169-4ff7-9422-9728a141f5a2"],
+      "role": "User"
+    },
+    "nexorasimESIMOperators": {
+      "groupName": "NexoraSIM eSIM Operators", 
+      "applications": ["40594035-9169-4ff7-9422-9728a141f5a2"],
+      "role": "ESIMOperator"
+    },
+    "nexorasimESIMAdmins": {
+      "groupName": "NexoraSIM eSIM Administrators",
+      "applications": ["40594035-9169-4ff7-9422-9728a141f5a2"],
+      "role": "ESIMAdmin"
+    }
+  },
+  "singleSignOn": {
+    "enabled": true,
+    "samlSigningCertificate": "auto-generated",
+    "loginUrl": "https://nexorasim.powerappsportals.com",
+    "logoutUrl": "https://nexorasim.powerappsportals.com/logout",
+    "replyUrls": [
+      "https://nexorasim.powerappsportals.com",
+      "https://nexorasim.powerappsportals.com/auth/callback"
+    ]
+  },
+  "conditionalAccess": {
+    "policies": [
+      {
+        "name": "NexoraSIM-MFA-Required",
+        "applications": ["40594035-9169-4ff7-9422-9728a141f5a2"],
+        "users": ["NexoraSIM Enterprise Users"],
+        "controls": ["mfa"]
+      },
+      {
+        "name": "NexoraSIM-Device-Compliance",
+        "applications": ["40594035-9169-4ff7-9422-9728a141f5a2"],
+        "users": ["NexoraSIM eSIM Operators"],
+        "controls": ["mfa", "compliantDevice"]
+      }
+    ]
+  }
+}

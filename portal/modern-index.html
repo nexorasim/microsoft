@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexoraSIM eSIM Enterprise Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="modern-ui.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="ms-navbar">
+        <div class="ms-flex" style="width: 100%;">
+            <a href="#" class="ms-brand">
+                <i class="fas fa-sim-card" style="margin-right: 8px;"></i>
+                NexoraSIM eSIM Enterprise Management
+            </a>
+            <div>
+                <a href="#" class="ms-nav-link">
+                    <i class="fas fa-language" style="margin-right: 4px;"></i>
+                    English
+                </a>
+                <a href="#" class="ms-nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt" style="margin-right: 4px;"></i>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ms-container">
+        <div class="ms-card">
+            <div class="ms-card-header">
+                <i class="fas fa-mobile-alt" style="margin-right: 8px;"></i>
+                Enterprise Device Provisioning
+            </div>
+            <div class="ms-card-body">
+                <form id="deviceForm">
+                    <div class="ms-grid">
+                        <div>
+                            <label class="ms-form-label">Device Platform</label>
+                            <select class="ms-form-control" id="platform" required>
+                                <option value="">Select Platform</option>
+                                <option value="Windows">Windows Enterprise</option>
+                                <option value="iOS">iOS Enterprise (MDM)</option>
+                                <option value="Android">Android Enterprise</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="ms-form-label">Network Operator</label>
+                            <select class="ms-form-control" id="carrier" required>
+                                <option value="">Select Operator</option>
+                                <option value="MPT">MPT Myanmar</option>
+                                <option value="ATOM">ATOM Myanmar</option>
+                                <option value="U9">U9 Networks</option>
+                                <option value="MYTEL">MYTEL</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="ms-form-label">eSIM ICCID</label>
+                            <input type="text" class="ms-form-control" id="iccid" placeholder="20-digit ICCID" maxlength="22">
+                        </div>
+                        <div style="display: flex; align-items: end;">
+                            <button type="submit" class="ms-btn ms-btn-primary ms-w-100">
+                                <i class="fas fa-cog" style="margin-right: 8px;"></i>
+                                Provision Device
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div id="result" class="ms-mt-3" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="ms-grid">
+            <div class="ms-status-card">
+                <i class="fas fa-shield-alt ms-status-icon" style="color: var(--ms-success);"></i>
+                <div class="ms-status-title">VPN Status</div>
+                <span id="vpnStatus" class="ms-badge ms-badge-secondary">Checking...</span>
+            </div>
+            <div class="ms-status-card">
+                <i class="fas fa-sim-card ms-status-icon" style="color: var(--ms-primary);"></i>
+                <div class="ms-status-title">eSIM Status</div>
+                <span id="esimStatus" class="ms-badge ms-badge-secondary">Not Configured</span>
+            </div>
+            <div class="ms-status-card">
+                <i class="fas fa-cloud ms-status-icon" style="color: var(--ms-primary);"></i>
+                <div class="ms-status-title">Drive Status</div>
+                <span id="driveStatus" class="ms-badge ms-badge-secondary">Checking...</span>
+            </div>
+            <div class="ms-status-card">
+                <i class="fas fa-check-circle ms-status-icon" style="color: var(--ms-warning);"></i>
+                <div class="ms-status-title">Compliance</div>
+                <span id="complianceStatus" class="ms-badge ms-badge-secondary">Checking...</span>
+            </div>
+        </div>
+
+        <div class="ms-card">
+            <div class="ms-card-header">
+                <i class="fas fa-chart-bar" style="margin-right: 8px;"></i>
+                Enterprise Analytics Dashboard
+            </div>
+            <div class="ms-card-body">
+                <div style="height: 400px; background: #f8f9fa; border-radius: var(--ms-radius); display: flex; align-items: center; justify-content: center; color: #6c757d;">
+                    <div class="ms-text-center">
+                        <i class="fas fa-chart-line" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <div>Loading enterprise analytics dashboard...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ms-card">
+            <div class="ms-card-header">
+                <i class="fas fa-cogs" style="margin-right: 8px;"></i>
+                Enterprise Management Portal
+            </div>
+            <div class="ms-card-body ms-text-center">
+                <p class="ms-mb-4">Access the full enterprise eSIM management portal for advanced lifecycle operations, Apple Business Manager integration, and Microsoft Entra ID device management.</p>
+                <a href="esim-management.html" class="ms-btn ms-btn-primary">
+                    <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>
+                    Open Enterprise Management Portal
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('deviceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const result = document.getElementById('result');
+            result.innerHTML = '<div class="ms-alert ms-alert-success"><i class="fas fa-check-circle" style="margin-right: 8px;"></i>Device provisioning initiated successfully</div>';
+            result.style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('vpnStatus').className = 'ms-badge ms-badge-success';
+                document.getElementById('vpnStatus').textContent = 'Connected';
+                document.getElementById('driveStatus').className = 'ms-badge ms-badge-success';
+                document.getElementById('driveStatus').textContent = 'Registered';
+                document.getElementById('complianceStatus').className = 'ms-badge ms-badge-success';
+                document.getElementById('complianceStatus').textContent = 'Compliant';
+            }, 2000);
+        });
+
+        function logout() {
+            window.location.href = 'https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/oauth2/v2.0/logout?post_logout_redirect_uri=' + encodeURIComponent(window.location.origin);
+        }
+    </script>
+</body>
+</html>

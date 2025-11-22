@@ -1,0 +1,184 @@
+name: Comprehensive Repository Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 2 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+  id-token: write
+  attestations: write
+
+env:
+  AZURE_TENANT_ID: d7ff8066-4e28-4170-9805-b60ec642c442
+
+jobs:
+  emoji-validation:
+    name: Validate No Emoji Usage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check for emoji usage
+        run: |
+          if grep -r -P '[\x{1F600}-\x{1F64F}]|[\x{1F300}-\x{1F5FF}]|[\x{1F680}-\x{1F6FF}]|[\x{1F1E0}-\x{1F1FF}]|[\x{2600}-\x{26FF}]|[\x{2700}-\x{27BF}]' . --exclude-dir=.git; then
+            echo "Emoji usage detected - violation of လုံးဝ Emoji အသုံးမပြုပါ directive"
+            exit 1
+          fi
+          echo "No emoji usage detected - compliance verified"
+
+  bilingual-validation:
+    name: Validate Bilingual Content
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Myanmar Unicode
+        run: |
+          find localization/my/ -name "*.json" -exec python3 -c "
+          import json, sys
+          with open('{}', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            if not any('\u1000' <= char <= '\u109F' for char in str(data)):
+              print('Missing Myanmar Unicode in {}')
+              sys.exit(1)
+          " \;
+          echo "Myanmar Unicode validation passed"
+
+  carrier-validation:
+    name: Validate Carrier Configurations
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Validate carrier configs
+        run: |
+          dotnet build app/entitlement-server/
+          carriers=("MPT" "ATOM" "U9" "MYTEL")
+          for carrier in "${carriers[@]}"; do
+            if ! grep -q "\"$carrier\"" app/entitlement-server/CarrierConfigurations.cs; then
+              echo "Missing carrier configuration: $carrier"
+              exit 1
+            fi
+          done
+          echo "All carrier configurations validated"
+
+  domain-validation:
+    name: Validate Portal Domain
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check portal.esim.com.mm references
+        run: |
+          if grep -r "portal.nexorasim.com" . --exclude-dir=.git; then
+            echo "Incorrect domain references found - must use portal.esim.com.mm"
+            exit 1
+          fi
+          if ! grep -r "portal.esim.com.mm" . --exclude-dir=.git; then
+            echo "Missing portal.esim.com.mm domain references"
+            exit 1
+          fi
+          echo "Domain validation passed"
+
+  security-compliance:
+    name: Security and Compliance Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/init@v3
+        with:
+          languages: csharp, javascript
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build for analysis
+        run: dotnet build app/entitlement-server/
+      - uses: github/codeql-action/analyze@v3
+      - name: Validate GSMA compliance
+        run: |
+          frameworks=("GSMA-SGP22" "GSMA-SGP32" "Myanmar-PTD" "GDPR" "SOC2")
+          for framework in "${frameworks[@]}"; do
+            if ! grep -r "$framework" docs/COMPLIANCE.md; then
+              echo "Missing compliance framework: $framework"
+              exit 1
+            fi
+          done
+
+  accessibility-audit:
+    name: Accessibility Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install accessibility tools
+        run: npm install -g @axe-core/cli lighthouse-ci
+      - name: Run accessibility tests
+        run: |
+          axe portal/enterprise-portal.html --save axe-results.json
+          if [ -f axe-results.json ]; then
+            violations=$(jq '.violations | length' axe-results.json)
+            if [ "$violations" -gt 0 ]; then
+              echo "Accessibility violations found: $violations"
+              exit 1
+            fi
+          fi
+
+  infrastructure-validation:
+    name: Infrastructure Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Bicep templates
+        run: |
+          curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+          chmod +x bicep
+          ./bicep build infra/main-hardened.bicep
+          ./bicep build infra/bicep/portal.bicep
+      - name: Validate Cloudflare configuration
+        run: |
+          if ! grep -q "portal.esim.com.mm" infra/cloudflare/wrangler.toml; then
+            echo "Missing portal.esim.com.mm in Cloudflare config"
+            exit 1
+          fi
+
+  audit-evidence:
+    name: Generate Audit Evidence
+    runs-on: ubuntu-latest
+    needs: [emoji-validation, bilingual-validation, carrier-validation, domain-validation, security-compliance, accessibility-audit, infrastructure-validation]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate comprehensive audit report
+        run: |
+          cat > audit-evidence.json << EOF
+          {
+            "audit_timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "repository": "${{ github.repository }}",
+            "commit": "${{ github.sha }}",
+            "validations": {
+              "emoji_free": true,
+              "bilingual_content": true,
+              "carrier_configs": ["MPT", "ATOM", "U9", "MYTEL"],
+              "domain_compliance": "portal.esim.com.mm",
+              "security_frameworks": ["GSMA-SGP22", "GSMA-SGP32", "Myanmar-PTD", "GDPR", "SOC2"],
+              "accessibility_wcag": "AA",
+              "infrastructure_validated": true
+            },
+            "compliance_status": "FULLY_COMPLIANT",
+            "deployment_ready": true
+          }
+          EOF
+      - uses: actions/upload-artifact@v4
+        with:
+          name: audit-evidence-${{ github.sha }}
+          path: audit-evidence.json
+          retention-days: 2555

@@ -1,0 +1,36 @@
+{
+  "app": {
+    "name": "NexoraSIM Enterprise Portal",
+    "version": "1.0.0",
+    "domain": "portal.esim.com.mm",
+    "environment": "production"
+  },
+  "auth": {
+    "provider": "entra-id",
+    "tenantId": "d7ff8066-4e28-4170-9805-b60ec642c442",
+    "clientId": "${ENTRA_CLIENT_ID}",
+    "scopes": ["User.Read", "DeviceManagementManagedDevices.ReadWrite.All"]
+  },
+  "api": {
+    "baseUrl": "https://api.portal.esim.com.mm",
+    "timeout": 30000,
+    "retryAttempts": 3
+  },
+  "features": {
+    "bilingual": true,
+    "defaultLanguage": "en",
+    "supportedLanguages": ["en", "my"],
+    "auditLogging": true,
+    "realTimeUpdates": true
+  },
+  "security": {
+    "csp": "default-src 'self'; script-src 'self' 'unsafe-inline' https://res.cdn.office.net; style-src 'self' 'unsafe-inline' https://res.cdn.office.net; img-src 'self' data: https:; connect-src 'self' https://api.portal.esim.com.mm https://login.microsoftonline.com",
+    "hsts": "max-age=31536000; includeSubDomains; preload",
+    "frameOptions": "DENY"
+  },
+  "compliance": {
+    "frameworks": ["GSMA-SGP22", "GSMA-SGP32", "Myanmar-PTD", "GDPR", "SOC2"],
+    "auditRetention": "7years",
+    "dataResidency": "Myanmar"
+  }
+}

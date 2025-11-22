@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexoraSIM eSIM Enterprise Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="nexorasim-portal.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="nexora-navbar">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center py-3">
+                <a href="#" class="nexora-brand">
+                    <i class="fas fa-sim-card me-2"></i>
+                    NexoraSIM eSIM Enterprise Management
+                </a>
+                <div class="d-flex align-items-center">
+                    <span class="nexora-nav-link me-3">
+                        <i class="fas fa-user me-1"></i>
+                        <span id="userDisplayName">Loading...</span>
+                    </span>
+                    <a href="#" class="nexora-nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt me-1"></i>
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- eSIM Profile Management -->
+        <div class="nexora-card nexora-fade-in">
+            <div class="nexora-card-header">
+                <h2 class="nexora-card-title">
+                    <i class="fas fa-sim-card me-2"></i>
+                    eSIM Profile Lifecycle Management
+                </h2>
+            </div>
+            <div class="nexora-card-body">
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="nexora-form-group">
+                            <label class="nexora-form-label">Network Operator</label>
+                            <select class="nexora-form-control" id="operatorSelect">
+                                <option value="MPT">MPT (Myanmar Posts and Telecommunications)</option>
+                                <option value="ATOM">ATOM Myanmar</option>
+                                <option value="U9">U9 Networks</option>
+                                <option value="MYTEL">MYTEL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="nexora-form-group">
+                            <label class="nexora-form-label">Enterprise User ID</label>
+                            <input type="text" class="nexora-form-control" id="enterpriseUserId" placeholder="Enter User ID">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="nexora-form-group">
+                            <label class="nexora-form-label">Device Platform</label>
+                            <select class="nexora-form-control" id="devicePlatform">
+                                <option value="iOS">iOS Enterprise (Apple Business Manager)</option>
+                                <option value="Android">Android Enterprise (Google Workspace)</option>
+                                <option value="Windows">Windows Enterprise (Intune)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="nexora-btn nexora-btn-primary w-100 mb-2" onclick="downloadProfile()">
+                            <i class="fas fa-download me-2"></i>
+                            Download eSIM Profile
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="nexora-btn nexora-btn-success w-100 mb-2" onclick="activateProfile()">
+                            <i class="fas fa-power-off me-2"></i>
+                            Activate Profile
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="nexora-btn nexora-btn-warning w-100 mb-2" onclick="suspendProfile()">
+                            <i class="fas fa-pause me-2"></i>
+                            Suspend Profile
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="nexora-btn nexora-btn-danger w-100 mb-2" onclick="revokeProfile()">
+                            <i class="fas fa-trash me-2"></i>
+                            Revoke Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apple Business Manager Integration -->
+        <div class="nexora-card nexora-fade-in">
+            <div class="nexora-card-header">
+                <h2 class="nexora-card-title">
+                    <i class="fab fa-apple me-2"></i>
+                    Apple Business Manager Integration
+                </h2>
+            </div>
+            <div class="nexora-card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="nexora-form-group">
+                            <label class="nexora-form-label">Apple Device UDID</label>
+                            <input type="text" class="nexora-form-control" id="appleUDID" placeholder="Enter Apple Device UDID">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="nexora-form-group">
+                            <label class="nexora-form-label">MDM Profile Assignment</label>
+                            <select class="nexora-form-control" id="mdmProfile">
+                                <option value="enterprise">Enterprise Standard</option>
+                                <option value="executive">Executive Premium</option>
+                                <option value="field">Field Operations</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button class="nexora-btn nexora-btn-primary" onclick="enrollAppleDevice()">
+                    <i class="fab fa-apple me-2"></i>
+                    Enroll iOS Device via Apple Business Manager
+                </button>
+            </div>
+        </div>
+
+        <!-- Microsoft Entra ID Integration -->
+        <div class="nexora-card nexora-fade-in">
+            <div class="nexora-card-header">
+                <h2 class="nexora-card-title">
+                    <i class="fab fa-microsoft me-2"></i>
+                    Microsoft Entra ID Device Management
+                </h2>
+            </div>
+            <div class="nexora-card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="nexora-form-group">
+                            <label class="nexora-form-label">Entra Device ID</label>
+                            <input type="text" class="nexora-form-control" id="entraDeviceId" placeholder="Azure AD Device ID">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="nexora-form-group">
+                            <label class="nexora-form-label">Compliance Policy</label>
+                            <select class="nexora-form-control" id="compliancePolicy">
+                                <option value="standard">Standard Compliance</option>
+                                <option value="high">High Security</option>
+                                <option value="executive">Executive Protection</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="nexora-form-group">
+                            <label class="nexora-form-label">Conditional Access</label>
+                            <select class="nexora-form-control" id="conditionalAccess">
+                                <option value="enabled">Enabled</option>
+                                <option value="disabled">Disabled</option>
+                                <option value="report-only">Report Only</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button class="nexora-btn nexora-btn-primary" onclick="configureEntraDevice()">
+                    <i class="fab fa-microsoft me-2"></i>
+                    Configure Entra ID Device Policies
+                </button>
+            </div>
+        </div>
+
+        <!-- eSIM Profile Status Dashboard -->
+        <div class="nexora-card nexora-fade-in">
+            <div class="nexora-card-header">
+                <h2 class="nexora-card-title">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Enterprise eSIM Profile Status
+                </h2>
+            </div>
+            <div class="nexora-card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="nexora-status-card">
+                            <i class="fas fa-download nexora-status-icon nexora-text-primary"></i>
+                            <div class="nexora-status-title">Downloaded Profiles</div>
+                            <span id="downloadedCount" class="nexora-status-badge success">0</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="nexora-status-card">
+                            <i class="fas fa-check-circle nexora-status-icon nexora-text-success"></i>
+                            <div class="nexora-status-title">Active Profiles</div>
+                            <span id="activeCount" class="nexora-status-badge success">0</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="nexora-status-card">
+                            <i class="fas fa-pause-circle nexora-status-icon nexora-text-warning"></i>
+                            <div class="nexora-status-title">Suspended Profiles</div>
+                            <span id="suspendedCount" class="nexora-status-badge warning">0</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="nexora-status-card">
+                            <i class="fas fa-times-circle nexora-status-icon nexora-text-danger"></i>
+                            <div class="nexora-status-title">Revoked Profiles</div>
+                            <span id="revokedCount" class="nexora-status-badge danger">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audit Trail -->
+        <div class="nexora-card nexora-fade-in">
+            <div class="nexora-card-header">
+                <h2 class="nexora-card-title">
+                    <i class="fas fa-clipboard-list me-2"></i>
+                    Enterprise Audit Trail
+                </h2>
+            </div>
+            <div class="nexora-card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Action</th>
+                                <th>User ID</th>
+                                <th>ICCID</th>
+                                <th>Operator</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="auditTableBody">
+                            <tr>
+                                <td colspan="6" class="text-center">Loading audit data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="esim-management.js"></script>
+</body>
+</html>

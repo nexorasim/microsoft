@@ -1,0 +1,7 @@
+name = "nexorasim-gateway"
+compatibility_date = "2023-10-01"
+main = "workers.js"
+
+[vars]
+AZURE_ENTITLEMENT_URL = "https://nexorasim-prod-func.azurewebsites.net"
+ENTRA_ID_ISSUER = "https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/v2.0"

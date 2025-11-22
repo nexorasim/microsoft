@@ -1,0 +1,36 @@
+name: Bug Report
+description: Report a bug in NexoraSIM Enterprise
+title: "[BUG] "
+labels: ["bug", "needs-triage"]
+assignees:
+  - nexoracore/dev-team
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug. Please fill out this form to help us understand and reproduce the issue.
+        
+        မြန်မာဘာသာဖြင့် အစီရင်ခံလိုပါက အောက်ပါ ပုံစံကို အသုံးပြုပါ။
+
+  - type: input
+    id: summary
+    attributes:
+      label: Bug Summary | အမှား အကျဉ်းချုပ်
+      description: A brief description of the bug
+      placeholder: "Example: eSIM profile activation fails on iOS devices"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity | ပြင်းထန်မှု
+      description: How severe is this bug?
+      options:
+        - Critical - System unusable | အရေးကြီး - စနစ် အသုံးမပြုနိုင်
+        - High - Major functionality broken | မြင့် - အဓိက လုပ်ဆောင်ချက် ပျက်စီး
+        - Medium - Minor functionality affected | အလယ်အလတ် - အသေးစား လုပ်ဆောင်ချက် ထိခိုက်
+        - Low - Cosmetic or minor issue | နည်း - အပြင်အဆင် သို့မဟုတ် အသေးစား ပြဿနာ
+    validations:
+      required: true

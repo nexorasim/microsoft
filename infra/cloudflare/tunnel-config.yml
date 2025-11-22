@@ -1,0 +1,33 @@
+tunnel: nexorasim-enterprise-tunnel
+credentials-file: /etc/cloudflared/cert.pem
+
+ingress:
+  - hostname: portal.esim.com.mm
+    service: https://portal-esim-prod-portal.azurestaticapps.net
+    originRequest:
+      httpHostHeader: portal-esim-prod-portal.azurestaticapps.net
+      tlsTimeout: 30s
+      tcpKeepAlive: 30s
+      noHappyEyeballs: false
+      keepAliveConnections: 100
+      keepAliveTimeout: 90s
+      
+  - hostname: api.portal.esim.com.mm
+    service: https://nexorasim-prod-func.azurewebsites.net
+    originRequest:
+      httpHostHeader: nexorasim-prod-func.azurewebsites.net
+      tlsTimeout: 30s
+      
+  - hostname: smdp.portal.esim.com.mm
+    service: https://nexorasim-prod-smdp-gateway.azurecontainerapps.io
+    originRequest:
+      httpHostHeader: nexorasim-prod-smdp-gateway.azurecontainerapps.io
+      
+  - service: http_status:404
+
+warp-routing:
+  enabled: true
+
+metrics: 0.0.0.0:8080
+
+no-autoupdate: true

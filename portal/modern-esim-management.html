@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexoraSIM eSIM Enterprise Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="modern-ui.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="ms-navbar">
+        <div class="ms-flex" style="width: 100%;">
+            <a href="modern-index.html" class="ms-brand">
+                <i class="fas fa-sim-card" style="margin-right: 8px;"></i>
+                NexoraSIM eSIM Enterprise Management
+            </a>
+            <div>
+                <span class="ms-nav-link">
+                    <i class="fas fa-user" style="margin-right: 4px;"></i>
+                    <span id="userName">Enterprise User</span>
+                </span>
+                <a href="#" class="ms-nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt" style="margin-right: 4px;"></i>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ms-container">
+        <div class="ms-card">
+            <div class="ms-card-header">
+                <i class="fas fa-sim-card" style="margin-right: 8px;"></i>
+                eSIM Profile Lifecycle Management
+            </div>
+            <div class="ms-card-body">
+                <div class="ms-grid">
+                    <div>
+                        <label class="ms-form-label">Network Operator</label>
+                        <select class="ms-form-control" id="operator">
+                            <option value="MPT">MPT Myanmar</option>
+                            <option value="ATOM">ATOM Myanmar</option>
+                            <option value="U9">U9 Networks</option>
+                            <option value="MYTEL">MYTEL</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="ms-form-label">Enterprise User ID</label>
+                        <input type="text" class="ms-form-control" id="userId" placeholder="Enter User ID">
+                    </div>
+                    <div>
+                        <label class="ms-form-label">Device Platform</label>
+                        <select class="ms-form-control" id="devicePlatform">
+                            <option value="iOS">iOS Enterprise (Apple Business Manager)</option>
+                            <option value="Android">Android Enterprise</option>
+                            <option value="Windows">Windows Enterprise</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="ms-grid ms-mt-3">
+                    <button class="ms-btn ms-btn-primary" onclick="downloadProfile()">
+                        <i class="fas fa-download" style="margin-right: 8px;"></i>
+                        Download Profile
+                    </button>
+                    <button class="ms-btn ms-btn-success" onclick="activateProfile()">
+                        <i class="fas fa-power-off" style="margin-right: 8px;"></i>
+                        Activate Profile
+                    </button>
+                    <button class="ms-btn" style="background: var(--ms-warning); color: white;" onclick="suspendProfile()">
+                        <i class="fas fa-pause" style="margin-right: 8px;"></i>
+                        Suspend Profile
+                    </button>
+                    <button class="ms-btn" style="background: var(--ms-danger); color: white;" onclick="revokeProfile()">
+                        <i class="fas fa-trash" style="margin-right: 8px;"></i>
+                        Revoke Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ms-card">
+            <div class="ms-card-header">
+                <i class="fab fa-apple" style="margin-right: 8px;"></i>
+                Apple Business Manager Integration
+            </div>
+            <div class="ms-card-body">
+                <div class="ms-grid">
+                    <div>
+                        <label class="ms-form-label">Apple Device UDID</label>
+                        <input type="text" class="ms-form-control" id="udid" placeholder="Enter Apple Device UDID">
+                    </div>
+                    <div>
+                        <label class="ms-form-label">MDM Profile</label>
+                        <select class="ms-form-control" id="mdmProfile">
+                            <option value="enterprise">Enterprise Standard</option>
+                            <option value="executive">Executive Premium</option>
+                            <option value="field">Field Operations</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="ms-btn ms-btn-primary ms-mt-3" onclick="enrollAppleDevice()">
+                    <i class="fab fa-apple" style="margin-right: 8px;"></i>
+                    Enroll iOS Device
+                </button>
+            </div>
+        </div>
+
+        <div class="ms-card">
+            <div class="ms-card-header">
+                <i class="fab fa-microsoft" style="margin-right: 8px;"></i>
+                Microsoft Entra ID Device Management
+            </div>
+            <div class="ms-card-body">
+                <div class="ms-grid">
+                    <div>
+                        <label class="ms-form-label">Entra Device ID</label>
+                        <input type="text" class="ms-form-control" id="deviceId" placeholder="Azure AD Device ID">
+                    </div>
+                    <div>
+                        <label class="ms-form-label">Compliance Policy</label>
+                        <select class="ms-form-control" id="compliance">
+                            <option value="standard">Standard Compliance</option>
+                            <option value="high">High Security</option>
+                            <option value="executive">Executive Protection</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="ms-btn ms-btn-primary ms-mt-3" onclick="configureDevice()">
+                    <i class="fab fa-microsoft" style="margin-right: 8px;"></i>
+                    Configure Device Policies
+                </button>
+            </div>
+        </div>
+
+        <div class="ms-card">
+            <div class="ms-card-header">
+                <i class="fas fa-chart-line" style="margin-right: 8px;"></i>
+                Enterprise Profile Status
+            </div>
+            <div class="ms-card-body">
+                <div class="ms-grid">
+                    <div class="ms-status-card">
+                        <i class="fas fa-download ms-status-icon" style="color: var(--ms-primary);"></i>
+                        <div class="ms-status-title">Downloaded</div>
+                        <span class="ms-badge ms-badge-success">24</span>
+                    </div>
+                    <div class="ms-status-card">
+                        <i class="fas fa-check-circle ms-status-icon" style="color: var(--ms-success);"></i>
+                        <div class="ms-status-title">Active</div>
+                        <span class="ms-badge ms-badge-success">18</span>
+                    </div>
+                    <div class="ms-status-card">
+                        <i class="fas fa-pause-circle ms-status-icon" style="color: var(--ms-warning);"></i>
+                        <div class="ms-status-title">Suspended</div>
+                        <span class="ms-badge ms-badge-warning">3</span>
+                    </div>
+                    <div class="ms-status-card">
+                        <i class="fas fa-times-circle ms-status-icon" style="color: var(--ms-danger);"></i>
+                        <div class="ms-status-title">Revoked</div>
+                        <span class="ms-badge ms-badge-danger">2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ms-card">
+            <div class="ms-card-header">
+                <i class="fas fa-clipboard-list" style="margin-right: 8px;"></i>
+                Enterprise Audit Trail
+            </div>
+            <div class="ms-card-body">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--ms-border);">
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Timestamp</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Action</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">User</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">ICCID</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="auditTable">
+                            <tr>
+                                <td style="padding: 12px;">2024-11-22 14:30:15</td>
+                                <td style="padding: 12px;">PROFILE_DOWNLOAD</td>
+                                <td style="padding: 12px;">user@nexorasim.com</td>
+                                <td style="padding: 12px;">89014103211118510720</td>
+                                <td style="padding: 12px;"><span class="ms-badge ms-badge-success">SUCCESS</span></td>
+                            </tr>
+                            <tr style="background: #fafafa;">
+                                <td style="padding: 12px;">2024-11-22 14:25:42</td>
+                                <td style="padding: 12px;">PROFILE_ACTIVATE</td>
+                                <td style="padding: 12px;">admin@nexorasim.com</td>
+                                <td style="padding: 12px;">89014103211118510719</td>
+                                <td style="padding: 12px;"><span class="ms-badge ms-badge-success">SUCCESS</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadProfile() {
+            showAlert('success', 'eSIM profile download initiated successfully');
+        }
+
+        function activateProfile() {
+            showAlert('success', 'eSIM profile activated successfully');
+        }
+
+        function suspendProfile() {
+            if (confirm('Are you sure you want to suspend this profile?')) {
+                showAlert('success', 'eSIM profile suspended successfully');
+            }
+        }
+
+        function revokeProfile() {
+            if (confirm('Are you sure you want to permanently revoke this profile?')) {
+                showAlert('success', 'eSIM profile revoked successfully');
+            }
+        }
+
+        function enrollAppleDevice() {
+            showAlert('success', 'iOS device enrolled successfully via Apple Business Manager');
+        }
+
+        function configureDevice() {
+            showAlert('success', 'Entra ID device policies configured successfully');
+        }
+
+        function showAlert(type, message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `ms-alert ms-alert-${type}`;
+            alertDiv.innerHTML = `<i class="fas fa-check-circle" style="margin-right: 8px;"></i>${message}`;
+            
+            document.querySelector('.ms-container').insertBefore(alertDiv, document.querySelector('.ms-container').firstChild);
+            
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        function logout() {
+            window.location.href = 'https://login.microsoftonline.com/d7ff8066-4e28-4170-9805-b60ec642c442/oauth2/v2.0/logout?post_logout_redirect_uri=' + encodeURIComponent(window.location.origin);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+/* NexoraSIM Modern Enterprise UI */
+
+:root {
+    --ms-primary: #0078d4;
+    --ms-secondary: #323130;
+    --ms-success: #107c10;
+    --ms-warning: #ff8c00;
+    --ms-danger: #d13438;
+    --ms-light: #faf9f8;
+    --ms-border: #edebe9;
+    --ms-shadow: 0 1.6px 3.6px rgba(0,0,0,.132);
+    --ms-radius: 4px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--ms-light);
+    color: var(--ms-secondary);
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.ms-navbar {
+    background: var(--ms-primary);
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    box-shadow: var(--ms-shadow);
+}
+
+.ms-brand {
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.ms-nav-link {
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: var(--ms-radius);
+    margin-left: 8px;
+}
+
+.ms-nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.ms-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.ms-card {
+    background: white;
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    box-shadow: var(--ms-shadow);
+    margin-bottom: 24px;
+}
+
+.ms-card-header {
+    background: var(--ms-primary);
+    color: white;
+    padding: 16px 24px;
+    font-weight: 600;
+    border-radius: var(--ms-radius) var(--ms-radius) 0 0;
+}
+
+.ms-card-body {
+    padding: 24px;
+}
+
+.ms-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: var(--ms-radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.1s ease;
+    min-height: 32px;
+}
+
+.ms-btn-primary {
+    background: var(--ms-primary);
+    color: white;
+    border-color: var(--ms-primary);
+}
+
+.ms-btn-primary:hover {
+    background: #106ebe;
+    border-color: #106ebe;
+}
+
+.ms-btn-success {
+    background: var(--ms-success);
+    color: white;
+    border-color: var(--ms-success);
+}
+
+.ms-form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.ms-form-control:focus {
+    outline: none;
+    border-color: var(--ms-primary);
+    box-shadow: 0 0 0 1px var(--ms-primary);
+}
+
+.ms-form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.ms-status-card {
+    background: white;
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    padding: 24px 16px;
+    text-align: center;
+    box-shadow: var(--ms-shadow);
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: box-shadow 0.2s ease;
+}
+
+.ms-status-card:hover {
+    box-shadow: 0 3.2px 7.2px rgba(0,0,0,.132);
+}
+
+.ms-status-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.ms-status-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.ms-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.ms-badge-success { background: #dff6dd; color: var(--ms-success); }
+.ms-badge-warning { background: #fff4ce; color: var(--ms-warning); }
+.ms-badge-danger { background: #fde7e9; color: var(--ms-danger); }
+.ms-badge-secondary { background: #f3f2f1; color: var(--ms-secondary); }
+
+.ms-alert {
+    padding: 12px 16px;
+    border-radius: var(--ms-radius);
+    margin-bottom: 16px;
+    border-left: 4px solid;
+}
+
+.ms-alert-success {
+    background: #dff6dd;
+    border-color: var(--ms-success);
+    color: var(--ms-success);
+}
+
+.ms-alert-danger {
+    background: #fde7e9;
+    border-color: var(--ms-danger);
+    color: var(--ms-danger);
+}
+
+.ms-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.ms-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ms-text-center { text-align: center; }
+.ms-mb-2 { margin-bottom: 8px; }
+.ms-mb-3 { margin-bottom: 16px; }
+.ms-mb-4 { margin-bottom: 24px; }
+.ms-mt-3 { margin-top: 16px; }
+.ms-w-100 { width: 100%; }
+
+@media (max-width: 768px) {
+    .ms-container { padding: 16px; }
+    .ms-card-body { padding: 16px; }
+    .ms-grid { grid-template-columns: 1fr; }
+}

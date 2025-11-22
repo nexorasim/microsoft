@@ -1,0 +1,32 @@
+name: "NexoraSIM Security Analysis"
+
+disable-default-queries: false
+
+queries:
+  - name: security-extended
+    uses: security-extended
+  - name: security-and-quality
+    uses: security-and-quality
+
+query-filters:
+  - exclude:
+      id: cs/web/debug-binary
+  - exclude:
+      id: cs/web/debug-directory-listing
+
+paths-ignore:
+  - "**/*.Designer.cs"
+  - "**/obj/**"
+  - "**/bin/**"
+  - "**/*.generated.cs"
+  - "**/TestResults/**"
+
+paths:
+  - "app/entitlement-server/**"
+  - "app/shared/**"
+  - "infra/cloudflare/**"
+
+packs:
+  - codeql/csharp-queries:AlertSuppression.ql
+  - codeql/csharp-queries:Security/CWE
+  - codeql/javascript-queries:Security/CWE
