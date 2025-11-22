@@ -55,7 +55,7 @@ jobs:
         run: dotnet publish app/entitlement-server/ --configuration Release --output ./publish
         
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: function-app
           path: ./publish

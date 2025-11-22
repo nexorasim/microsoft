@@ -91,7 +91,7 @@ jobs:
         run: dotnet publish app/entitlement-server/ --no-build --configuration Release --output ./publish
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build-artifacts
           path: ./publish/
@@ -358,7 +358,7 @@ jobs:
           EOF
 
       - name: Upload rollback plan
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: rollback-plan-${{ needs.validate-release.outputs.version }}
           path: rollback-instructions.md

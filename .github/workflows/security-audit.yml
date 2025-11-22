@@ -92,7 +92,7 @@ jobs:
           sbom-tool generate -b ./app/entitlement-server/ -bc ./app/entitlement-server/ -pn "NexoraSIM-EntitlementServer" -pv "1.0.0" -ps "NexoraCore" -nsb https://nexorasim.com
 
       - name: Upload SBOM
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: sbom-report
           path: _manifest/spdx_2.2/manifest.spdx.json
@@ -167,7 +167,7 @@ jobs:
           EOF
 
       - name: Upload Compliance Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: compliance-report
           path: compliance-report.json
@@ -197,7 +197,7 @@ jobs:
           lhci autorun --upload.target=filesystem --upload.outputDir=./lighthouse-results
 
       - name: Upload accessibility reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: accessibility-reports
           path: |
@@ -235,7 +235,7 @@ jobs:
           subject-path: './publish/*'
 
       - name: Upload signed artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: signed-artifacts
           path: |
@@ -274,7 +274,7 @@ jobs:
           EOF
 
       - name: Upload audit pack
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: audit-pack-${{ github.sha }}
           path: audit-pack/
