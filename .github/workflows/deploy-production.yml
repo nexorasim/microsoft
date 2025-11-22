@@ -142,7 +142,7 @@ jobs:
 
       - name: Deploy Bicep template
         id: deploy
-        uses: azure/arm-deploy@v1
+        uses: azure/arm-deploy@v2
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: nexorasim-prod-rg
