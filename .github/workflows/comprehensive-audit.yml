@@ -177,7 +177,7 @@ jobs:
             "deployment_ready": true
           }
           EOF
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: audit-evidence-${{ github.sha }}
           path: audit-evidence.json
